@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="edu.aku.hassannaqvi.nns2018_teamleadersapp.MainActivity">
+
+    <data>
+
+        <variable
+            name="callback"
+            type="edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.MainActivity" />
+    </data>
+
+    <ScrollView
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="72dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- Login progress -->
+
+            <TextView
+                android:id="@+id/lblAppVersion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/black"
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblheader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/dullWhile"
+                android:text="Main Menu"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/testing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/red"
+                android:elevation="2dp"
+                android:gravity="center_horizontal"
+                android:keepScreenOn="true"
+                android:text="ONLY FOR TESTING"
+                android:textColor="@color/dullWhile"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lblMainMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Main Menu"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/recordSummary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/black"
+                android:padding="20dp"
+                android:text="Records Summary"
+                android:textColor="@color/green"
+                android:textSize="14sp"
+                android:typeface="monospace"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="3"
+                    android:background="@android:color/transparent"
+                    android:text="AREA: "
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spAreas"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="35"
+                    android:gravity="center"
+                    android:popupBackground="#ffffff" />
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/openB"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:onClick="openB"
+                android:text="OPEN Anthropometry Section" />
+
+
+            <Button
+                android:id="@+id/syncServer"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="16dp"
+                android:background="#1565C0"
+                android:onClick="syncServer"
+                android:text="Upload Data"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/syncStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sync Status"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/adminsec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/syncDevice"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1565C0"
+                    android:onClick="syncDevice"
+                    android:text="Download Data"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/downloadApp"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/red"
+                    android:text="DOWNLOAD APP"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/updateApp"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#D60000"
+                    android:onClick="updateApp"
+                    android:text="Update App"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/openDB"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="#1565C0"
+                    android:onClick="openDB"
+                    android:text="Open Database Manager" />
+
+                <Button
+                    android:id="@+id/testGPS"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="16dp"
+                    android:onClick="testGPS"
+                    android:text="Test GPS Coordinates" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

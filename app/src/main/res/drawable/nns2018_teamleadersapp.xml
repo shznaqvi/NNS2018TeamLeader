@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/layer_delete">
+        <bitmap
+            android:gravity="center"
+            android:src="@android:drawable/ic_delete" />
+    </item>
+    <item android:id="@+id/layer_custom">
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/nns_2018_survey" />
+    </item>
+</layer-list>

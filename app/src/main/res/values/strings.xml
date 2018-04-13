@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">NNS 2018 - Team Leaders\' App</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="enable_p2p_button">Enable Wifi</string>
+    <string name="discover_peers_button">Find Near-By Devices</string>
+    <string name="connect_peer_button">Connect</string>
+    <string name="disconnect_peer_button">Disconnect</string>
+    <string name="empty"></string>
+    <string name="yes1">yes</string>
+    <string name="no1">no</string>
+    <string name="client_text">This device will act as a client. Click on Gallery button to pick a local(stored) file</string>
+    <string name="empty_message">No devices found. Turn on P2P and perform discovery from the Action Bar</string>
+    <string name="p2p_off_warning">Enable P2P from action bar button above or system settings</string>
+    <string name="group_owner_text">"Am I the Group Owner? "</string>
+    <string name="label_me">THIS DEVICE</string>
+    <string name="label_peers">NEAR-BY DEVICES</string>
+    <string name="istatus">انٹرویو کا نتیجہ</string>
+    <string name="istatusa"> مکمل</string>
+    <string name="istatusb"> گھر پرموجود نہیں</string>
+    <string name="istatusc">انکار </string>
+    <string name="istatusd"> جزوی مکمل </string>
+    <string name="istatuse">جواب دینے سے قاصر</string>
+    <string name="istatusf">گھر نہیں ملا</string>
+    <string name="istatusg"> عمر کی وجہ سے نااہل </string>
+
+    <string name="istatusha"> مکمل</string>
+    <string name="istatushb">گھرانے کا کوئی فرد یا باصلاحیت جواب دہندہ گھر پر موجود نہیں تھا</string>
+    <string name="istatushc">گھرانہ کے تمام افراد لمبے عرصے کے لیے گھر سے غیر حاضر تھے </string>
+    <string name="istatushd"> انکار کردیا </string>
+    <string name="istatushe">خالی گھر/گھر کا پتہ نہ تھا</string>
+    <string name="istatushf">گھر نہیں ملا</string>
+    <string name="istatushg">جزوی مکمل</string>
+    <string name="other">Other</string>
+    <string name="end_interview">End Interview</string>
+    <string name="action_sign_in">Login</string>
+    <string name="dummy_button" />
+    <string name="error_incorrect_password">Incorrect Password</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+</resources>
