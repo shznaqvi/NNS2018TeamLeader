@@ -41,7 +41,7 @@ public class BLRandomContract {
     public BLRandomContract Sync(JSONObject jsonObject) throws JSONException {
         this._ID = jsonObject.getString(singleRandomHH.COLUMN_ID);
         this.LUID = jsonObject.getString(singleRandomHH.COLUMN_LUID);
-        this.subVillageCode = jsonObject.getString(singleRandomHH.COLUMN_ENUM_BLOCK_CODE);
+        this.subVillageCode = jsonObject.getString(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE);
         this.structure = jsonObject.getString(singleRandomHH.COLUMN_STRUCTURE_NO);
 
         this.structure = String.format("%04d", Integer.valueOf(this.structure));
@@ -60,7 +60,7 @@ public class BLRandomContract {
     public BLRandomContract Hydrate(Cursor cursor) {
         this._ID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ID));
         this.LUID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_LUID));
-        this.subVillageCode = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ENUM_BLOCK_CODE));
+        this.subVillageCode = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE));
         this.structure = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_STRUCTURE_NO));
         this.extension = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_FAMILY_EXT_CODE));
         this.hh = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HH));
@@ -158,7 +158,7 @@ public class BLRandomContract {
         public static final String COLUMN_ID = "_id";
         public static final String COLUMN_RANDOMDT = "randDT";
         public static final String COLUMN_LUID = "UID";
-        public static final String COLUMN_ENUM_BLOCK_CODE = "hh02";
+        public static final String COLUMN_CLUSTER_BLOCK_CODE = "hh02";
         public static final String COLUMN_STRUCTURE_NO = "hh03";
         public static final String COLUMN_FAMILY_EXT_CODE = "hh07";
         public static final String COLUMN_HH = "hh";

@@ -67,6 +67,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
     <!--
         <stnamename="SpinnerItem">
             <inamename="android:textAppearance">@style/SpinnerItemText</item>
