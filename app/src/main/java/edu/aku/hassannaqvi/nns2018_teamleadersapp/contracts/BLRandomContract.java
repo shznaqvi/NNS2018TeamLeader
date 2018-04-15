@@ -21,6 +21,7 @@ public class BLRandomContract {
     private String randomDT;
     private String contact;
     private String selStructure;
+    private String rndType;
 
     public BLRandomContract() {
     }
@@ -70,6 +71,23 @@ public class BLRandomContract {
         this.selStructure = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HH_SELECTED_STRUCT));
 
         return this;
+    }
+
+
+    public JSONObject toJSONObject() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put(singleRandomHH.COLUMN_ID, this._ID);
+        json.put(singleRandomHH.COLUMN_RANDOMDT, this.randomDT);
+        json.put(singleRandomHH.COLUMN_LUID, this.LUID);
+        json.put(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE, this.subVillageCode);
+        json.put(singleRandomHH.COLUMN_STRUCTURE_NO, this.structure);
+        json.put(singleRandomHH.COLUMN_FAMILY_EXT_CODE, this.extension);
+        json.put(singleRandomHH.COLUMN_HH_HEAD, this.hhhead);
+        json.put(singleRandomHH.COLUMN_CONTACT, this.contact);
+        json.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, this.selStructure);
+        json.put(singleRandomHH.COLUMN_RANDOM_TYPE, "1");
+
+        return json;
     }
 
     public String get_ID() {
@@ -165,6 +183,11 @@ public class BLRandomContract {
         public static final String COLUMN_HH_HEAD = "hh08";
         public static final String COLUMN_CONTACT = "hh09";
         public static final String COLUMN_HH_SELECTED_STRUCT = "hhss";
+
+        public static final String COLUMN_RANDOM_TYPE = "rndtype";
+        public static final String COLUMN_SYNCED = "synced";
+        public static final String COLUMN_SYNCED_DATE = "synced_date";
+
         public static String _URI = "bl_random.php";
     }
 

@@ -79,7 +79,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + singleRandomHH.COLUMN_HH_HEAD + " TEXT,"
             + singleRandomHH.COLUMN_CONTACT + " TEXT,"
             + singleRandomHH.COLUMN_HH_SELECTED_STRUCT + " TEXT,"
-            + singleRandomHH.COLUMN_RANDOMDT + " TEXT );";
+            + singleRandomHH.COLUMN_RANDOMDT + " TEXT," +
+            singleRandomHH.COLUMN_RANDOM_TYPE + " TEXT, " +
+            singleRandomHH.COLUMN_SYNCED + " TEXT, " +
+            singleRandomHH.COLUMN_SYNCED_DATE + " TEXT " +
+            " );";
 
     private static final String SQL_CREATE_FORMS = "CREATE TABLE "
             + FormsTable.TABLE_NAME + "("
@@ -168,7 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_DECEASED = "DROP TABLE IF EXISTS " + DeceasedContract.DeceasedTable.TABLE_NAME;
     private static final String SQL_DELETE_BLRANDOM = "DROP TABLE IF EXISTS " + BLRandomContract.singleRandomHH.TABLE_NAME;
     private static final String SQL_DELETE_VERSIONAPP = "DROP TABLE IF EXISTS " + VersionAppTable.TABLE_NAME;
-    private static final String SQL_DELETE_LISTINGS= "DROP TABLE IF EXISTS " + ListingEntry.TABLE_NAME;
+    private static final String SQL_DELETE_LISTINGS = "DROP TABLE IF EXISTS " + ListingEntry.TABLE_NAME;
     final String SQL_CREATE_SERIAL = "CREATE TABLE " + singleSerial.TABLE_NAME + " (" +
             singleSerial._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
             singleSerial.COLUMN_DEVICE_ID + " TEXT, " +
