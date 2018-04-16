@@ -50,6 +50,7 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.AndroidDatabaseManager;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.MainApp;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.databinding.ActivityEndingBinding;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.databinding.ActivityMainBinding;
 
 public class MainActivity extends MenuActivity {
 
@@ -145,7 +146,7 @@ public class MainActivity extends MenuActivity {
 
 
 //        Binding setting
-        ActivityEndingBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mainBinding.setCallback(this);
 
         DatabaseHelper db = new DatabaseHelper(this);
@@ -274,7 +275,7 @@ public class MainActivity extends MenuActivity {
     public void openForm() {
 
 //        if (spAreas.getSelectedItemPosition() != 0) {
-        final Intent oF = new Intent(MainActivity.this, SectionA1Activity.class);
+        final Intent oF = new Intent(MainActivity.this, RandomizationActivity.class);
 
         if (sharedPref.getString("tagName", null) != "" && sharedPref.getString("tagName", null) != null && !MainApp.userName.equals("0000")) {
             //   startActivity(oF);

@@ -69,6 +69,7 @@ public class BLRandomContract {
         this.hhhead = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HH_HEAD));
         this.contact = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_CONTACT));
         this.selStructure = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HH_SELECTED_STRUCT));
+        this.rndType = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_RANDOM_TYPE));
 
         return this;
     }

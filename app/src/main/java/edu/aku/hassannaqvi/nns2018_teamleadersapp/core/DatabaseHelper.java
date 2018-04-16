@@ -732,6 +732,57 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    public Collection<BLRandomContract> getUnsyncedBLRandom() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = {
+                singleRandomHH.COLUMN_ID,
+                singleRandomHH.COLUMN_LUID,
+                singleRandomHH.COLUMN_STRUCTURE_NO,
+                singleRandomHH.COLUMN_FAMILY_EXT_CODE,
+                singleRandomHH.COLUMN_HH,
+                singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE,
+                singleRandomHH.COLUMN_RANDOMDT,
+                singleRandomHH.COLUMN_HH_SELECTED_STRUCT,
+                singleRandomHH.COLUMN_CONTACT,
+                singleRandomHH.COLUMN_HH_HEAD,
+                singleRandomHH.COLUMN_RANDOM_TYPE
+        };
+
+        String whereClause =  singleRandomHH.COLUMN_SYNCED + " is null OR " + singleRandomHH.COLUMN_SYNCED + " = '' ";
+        String[] whereArgs = null;
+        String groupBy = null;
+        String having = null;
+
+        String orderBy =
+                singleRandomHH.COLUMN_ID + " ASC";
+
+        Collection<BLRandomContract> allBL = new ArrayList<>();
+        try {
+            c = db.query(
+                    singleRandomHH.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy                    // The sort order
+            );
+            while (c.moveToNext()) {
+                BLRandomContract dc = new BLRandomContract();
+                allBL.add(dc.Hydrate(c));
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return allBL;
+    }
+
     public Collection<BLRandomContract> getAllBLRandom(String subAreaCode, String hh) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
@@ -745,7 +796,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 singleRandomHH.COLUMN_RANDOMDT,
                 singleRandomHH.COLUMN_HH_SELECTED_STRUCT,
                 singleRandomHH.COLUMN_CONTACT,
-                singleRandomHH.COLUMN_HH_HEAD
+                singleRandomHH.COLUMN_HH_HEAD,
+                singleRandomHH.COLUMN_RANDOM_TYPE
         };
 
         String whereClause = singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + "=? AND " +
@@ -1854,6 +1906,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         int count = db.update(
                 singleSerial.TABLE_NAME,
+                values,
+                where,
+                whereArgs);
+    }
+
+    public void updateSyncedBLRandom(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+// New value for one column
+        ContentValues values = new ContentValues();
+        values.put(singleRandomHH.COLUMN_SYNCED, true);
+        values.put(singleRandomHH.COLUMN_SYNCED_DATE, new Date().toString());
+
+// Which row to update, based on the title
+        String where = singleRandomHH.COLUMN_ID + " = ?";
+        String[] whereArgs = {id};
+
+        int count = db.update(
+                singleRandomHH.TABLE_NAME,
                 values,
                 where,
                 whereArgs);

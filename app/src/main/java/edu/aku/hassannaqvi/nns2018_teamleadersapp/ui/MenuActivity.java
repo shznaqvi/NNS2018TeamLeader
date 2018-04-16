@@ -25,6 +25,7 @@ import java.util.Date;
 
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.WiFiDirectActivity;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ChildContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.DeceasedContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.EligibleMembersContract;
@@ -266,6 +267,16 @@ public class MenuActivity extends AppCompatActivity {
                     DeceasedContract.class,
                     MainApp._HOST_URL + DeceasedContract.DeceasedTable._URL,
                     db.getUnsyncedDeceasedMembers(), this.findViewById(R.id.syncStatus)
+            ).execute();
+
+            Toast.makeText(getApplicationContext(), "Syncing BL Random", Toast.LENGTH_SHORT).show();
+            new SyncAllData(
+                    this,
+                    "BL_Random",
+                    "updateSyncedBLRandom",
+                    BLRandomContract.class,
+                    MainApp._HOST_URL + BLRandomContract.singleRandomHH._URI,
+                    db.getUnsyncedBLRandom(), this.findViewById(R.id.syncStatus)
             ).execute();
 
             SharedPreferences syncPref = getSharedPreferences("SyncInfo", Context.MODE_PRIVATE);

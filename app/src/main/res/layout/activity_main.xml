@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="edu.aku.hassannaqvi.nns2018_teamleadersapp.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <data>
-
         <variable
             name="callback"
             type="edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.MainActivity" />
