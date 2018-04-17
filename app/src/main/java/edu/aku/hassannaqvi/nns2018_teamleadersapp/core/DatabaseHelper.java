@@ -1036,7 +1036,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void syncAnthroFromDevice(JSONArray fmlist) {
+    public void insertDataComesFromDevice(JSONArray fmlist) {
         SQLiteDatabase db = this.getWritableDatabase();
         //db.delete(UsersTable.TABLE_NAME, null, null);
         try {
@@ -1044,6 +1044,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonObjectUser = jsonArray.getJSONObject(i);
+
+                if (jsonObjectUser.getString("projectname").equals("NNS-LINELISTING 2018")){
+
+                }
 
                 FamilyMembersContract fmc = new FamilyMembersContract();
                 fmc.Sync(jsonObjectUser);

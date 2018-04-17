@@ -275,7 +275,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                     DatabaseHelper db = new DatabaseHelper(context);
                     try {
                         JSONArray jsonArray = new JSONArray(json);
-                        db.syncAnthroFromDevice(jsonArray);
+                        db.insertDataComesFromDevice(jsonArray);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

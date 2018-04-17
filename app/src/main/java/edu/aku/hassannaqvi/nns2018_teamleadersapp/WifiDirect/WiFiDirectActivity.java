@@ -67,7 +67,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
 
-        txtMsg = findViewById(R.id.txtMsg);
+//        txtMsg = findViewById(R.id.txtMsg);
     }
 
     /**
@@ -257,7 +257,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
 
     }
 
-    public void SendMsg(View v) {
+/*    public void SendMsg(View v) {
         Intent intent = new Intent();
         intent.setAction(ACTION_SEND_DATA);
         intent.putExtra(Intent.EXTRA_TEXT, txtMsg.getText().toString());
@@ -266,13 +266,13 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         intent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
         this.startActivity(intent);
 
-   /* Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
+   *//* Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
     serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
     serviceIntent.putExtra(Intent.EXTRA_TEXT, msgBox.getText().toString());
     serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
             info.groupOwnerAddress.getHostAddress());
     serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
-    getActivity().startService(serviceIntent);*/
-    }
+    getActivity().startService(serviceIntent);*//*
+    }*/
 
 }

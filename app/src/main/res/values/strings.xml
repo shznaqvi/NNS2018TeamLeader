@@ -14,7 +14,7 @@
     <string name="empty_message">No devices found. Turn on P2P and perform discovery from the Action Bar</string>
     <string name="p2p_off_warning">Enable P2P from action bar button above or system settings</string>
     <string name="group_owner_text">"Am I the Group Owner? "</string>
-    <string name="label_me">THIS DEVICE</string>
+    <string name="label_me"> MY DEVICE NAME </string>
     <string name="label_peers">NEAR-BY DEVICES</string>
     <string name="istatus">انٹرویو کا نتیجہ</string>
     <string name="istatusa"> مکمل</string>
