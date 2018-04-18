@@ -32,6 +32,8 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.FamilyMembersContrac
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.FamilyMembersContract.familyMembers;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.FormsContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.FormsContract.FormsTable;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract.ListingEntry;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.MWRAContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.MWRAContract.MWRATable;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.NutritionContract;
@@ -48,8 +50,6 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.UsersContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.UsersContract.UsersTable;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.VersionAppContract.VersionAppTable;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract.ListingEntry;
 
 
 /**
@@ -749,7 +749,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 singleRandomHH.COLUMN_RANDOM_TYPE
         };
 
-        String whereClause =  singleRandomHH.COLUMN_SYNCED + " is null OR " + singleRandomHH.COLUMN_SYNCED + " = '' ";
+        String whereClause = singleRandomHH.COLUMN_SYNCED + " is null OR " + singleRandomHH.COLUMN_SYNCED + " = '' ";
         String[] whereArgs = null;
         String groupBy = null;
         String having = null;
@@ -1038,41 +1038,100 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void insertDataComesFromDevice(JSONArray fmlist) {
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.delete(UsersTable.TABLE_NAME, null, null);
         try {
             JSONArray jsonArray = fmlist;
             for (int i = 0; i < jsonArray.length(); i++) {
 
                 JSONObject jsonObjectUser = jsonArray.getJSONObject(i);
 
-                if (jsonObjectUser.getString("projectname").equals("NNS-LINELISTING 2018")){
-
+                switch (jsonObjectUser.getString("projectname")) {
+                    case "NNS-LINELISTING 2018":
+                        LisitngInsertion(jsonObjectUser, db);
+                        break;
+                    case "National Nutrition Survey 2018":
+                        AntrhoInsertion(jsonObjectUser, db);
+                        break;
                 }
 
-                FamilyMembersContract fmc = new FamilyMembersContract();
-                fmc.Sync(jsonObjectUser);
-                ContentValues values = new ContentValues();
 
-                values.put(familyMembers.COLUMN_UID, fmc.get_UID());
-                values.put(familyMembers.COLUMN_UUID, fmc.get_UUID());
-                values.put(familyMembers.COLUMN_FORMDATE, fmc.getFormDate());
-                values.put(familyMembers.COLUMN_USER, fmc.getUser());
-                //FormsTable.COLUMN_GPSELEV,
-                values.put(familyMembers.COLUMN_HH_NO, fmc.getHhNo());
-                values.put(familyMembers.COLUMN_ENM_NO, fmc.getEnmNo());
-                values.put(familyMembers.COLUMN_SA2, fmc.getsA2());
-                values.put(familyMembers.COLUMN_AV, fmc.getAv());
-                values.put(familyMembers.COLUMN_DEVICETAGID, fmc.getDeviceId());
-                values.put(familyMembers.COLUMN_DEVICEID, fmc.getDeviceId());
-                db.insert(familyMembers.TABLE_NAME, null, values);
             }
 
 
         } catch (Exception e) {
-            Log.d(TAG, "syncAnthro(e): " + e);
+            Log.d(TAG, "syncData(e): " + e);
         } finally {
             db.close();
         }
+    }
+
+    public void AntrhoInsertion(JSONObject jsonObjectDT, SQLiteDatabase db) throws JSONException {
+        FamilyMembersContract fmc = new FamilyMembersContract();
+        fmc.Sync(jsonObjectDT);
+        ContentValues values = new ContentValues();
+
+        values.put(familyMembers.COLUMN_UID, fmc.get_UID());
+        values.put(familyMembers.COLUMN_UUID, fmc.get_UUID());
+        values.put(familyMembers.COLUMN_FORMDATE, fmc.getFormDate());
+        values.put(familyMembers.COLUMN_USER, fmc.getUser());
+        values.put(familyMembers.COLUMN_HH_NO, fmc.getHhNo());
+        values.put(familyMembers.COLUMN_ENM_NO, fmc.getEnmNo());
+        values.put(familyMembers.COLUMN_SA2, fmc.getsA2());
+        values.put(familyMembers.COLUMN_AV, fmc.getAv());
+        values.put(familyMembers.COLUMN_DEVICETAGID, fmc.getDeviceId());
+        values.put(familyMembers.COLUMN_DEVICEID, fmc.getDeviceId());
+        db.insert(familyMembers.TABLE_NAME, null, values);
+    }
+
+    public void LisitngInsertion(JSONObject jsonObjectDT, SQLiteDatabase db) throws JSONException {
+        ListingContract lc = new ListingContract();
+        lc.Sync(jsonObjectDT);
+
+        ContentValues values = new ContentValues();
+        values.put(ListingEntry.COLUMN_NAME_UID, lc.getUID());
+        values.put(ListingEntry.COLUMN_NAME_HHDATETIME, lc.getHhDT());
+
+        values.put(ListingEntry.COLUMN_NAME_ENUMCODE, lc.getEnumCode());
+        values.put(ListingEntry.COLUMN_NAME_CLUSTERCODE, lc.getClusterCode());
+        values.put(ListingEntry.COLUMN_NAME_ENUMSTR, lc.getEnumStr());
+
+        values.put(ListingEntry.COLUMN_NAME_HH01, lc.getHh01());
+        values.put(ListingEntry.COLUMN_NAME_HH02, lc.getHh02());
+        values.put(ListingEntry.COLUMN_NAME_HH03, lc.getHh03());
+
+        values.put(ListingEntry.COLUMN_NAME_HH04, lc.getHh04());
+        values.put(ListingEntry.COLUMN_NAME_HH05, lc.getHh05());
+        values.put(ListingEntry.COLUMN_NAME_HH06, lc.getHh06());
+        values.put(ListingEntry.COLUMN_NAME_HH07, lc.getHh07());
+        values.put(ListingEntry.COLUMN_NAME_HH07n, lc.getHh07n());
+        values.put(ListingEntry.COLUMN_NAME_HH08, lc.getHh08());
+        values.put(ListingEntry.COLUMN_NAME_HH09, lc.getHh09());
+        values.put(ListingEntry.COLUMN_NAME_HH08A1, lc.getHh08a1());
+        values.put(ListingEntry.COLUMN_NAME_HH09A1, lc.getHh09a1());
+        values.put(ListingEntry.COLUMN_NAME_HH10, lc.getHh10());
+        values.put(ListingEntry.COLUMN_NAME_HH11, lc.getHh11());
+        values.put(ListingEntry.COLUMN_NAME_HH12, lc.getHh12());
+        values.put(ListingEntry.COLUMN_NAME_HH13, lc.getHh13());
+        values.put(ListingEntry.COLUMN_NAME_HH14, lc.getHh14());
+        values.put(ListingEntry.COLUMN_NAME_HH15, lc.getHh15());
+        values.put(ListingEntry.COLUMN_NAME_HH16, lc.getHh16());
+        values.put(ListingEntry.COLUMN_ISNEWHH, lc.getIsNewHH());
+        values.put(ListingEntry.COLUMN_ADDRESS, lc.getHhadd());
+        values.put(ListingEntry.COLUMN_NAME_DEVICEID, lc.getDeviceID());
+        values.put(ListingEntry.COLUMN_USERNAME, lc.getUsername());
+        values.put(ListingEntry.COLUMN_NAME_GPSLat, lc.getGPSLat());
+        values.put(ListingEntry.COLUMN_NAME_GPSLng, lc.getGPSLng());
+        values.put(ListingEntry.COLUMN_NAME_GPSTime, lc.getGPSTime());
+        values.put(ListingEntry.COLUMN_NAME_GPSAccuracy, lc.getGPSAcc());
+        values.put(ListingEntry.COLUMN_NAME_GPSAltitude, lc.getGPSAlt());
+        values.put(ListingEntry.COLUMN_APPVER, lc.getAppVer());
+        values.put(ListingEntry.COLUMN_RANDOMIZED, lc.getIsRandom());
+        values.put(ListingEntry.COLUMN_TAGID, lc.getTagId());
+
+        long newRowId;
+        newRowId = db.insert(
+                ListingEntry.TABLE_NAME,
+                ListingEntry.COLUMN_NAME_NULLABLE,
+                values);
     }
 
     public Collection<ListingContract> getAllListingsForRandom() {

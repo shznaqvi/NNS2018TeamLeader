@@ -496,6 +496,50 @@ public class ListingContract {
         return lc;
     }
 
+
+    public ListingContract Sync(JSONObject jsonObject) throws JSONException {
+
+        this.ID = jsonObject.getString(ListingEntry._ID);
+        this.UID = jsonObject.getString(ListingEntry.COLUMN_NAME_UID);
+        this.hhDT = jsonObject.getString(ListingEntry.COLUMN_NAME_HHDATETIME);
+        this.enumCode = jsonObject.getString(ListingEntry.COLUMN_NAME_ENUMCODE);
+        this.clusterCode = jsonObject.getString(ListingEntry.COLUMN_NAME_CLUSTERCODE);
+        this.enumStr = jsonObject.getString(ListingEntry.COLUMN_NAME_ENUMSTR);
+        this.hh01 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH01);
+        this.hh02 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH02);
+        this.hh03 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH03);
+        this.hh04 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH04);
+        this.hh05 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH05);
+        this.hh06 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH06);
+        this.hh07 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH07);
+        this.hh07n = jsonObject.getString(ListingEntry.COLUMN_NAME_HH07n);
+        this.hh08a1 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH08A1);
+        this.hh08 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH08);
+        this.hh09 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH09);
+        this.hh09a1 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH09A1);
+        this.hh10 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH10);
+        this.hh11 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH11);
+        this.hh12 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH12);
+        this.hh13 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH13);
+        this.hh14 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH14);
+        this.hh15 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH15);
+        this.hh16 = jsonObject.getString(ListingEntry.COLUMN_NAME_HH16);
+        this.hhadd = jsonObject.getString(ListingEntry.COLUMN_ADDRESS);
+        this.isNewHH = jsonObject.getString(ListingEntry.COLUMN_ISNEWHH);
+        this.DeviceID = jsonObject.getString(ListingEntry.COLUMN_NAME_DEVICEID);
+        this.GPSLat = jsonObject.getString(ListingEntry.COLUMN_NAME_GPSLat);
+        this.GPSLng = jsonObject.getString(ListingEntry.COLUMN_NAME_GPSLng);
+        this.GPSTime = jsonObject.getString(ListingEntry.COLUMN_NAME_GPSTime);
+        this.GPSAcc = jsonObject.getString(ListingEntry.COLUMN_NAME_GPSAccuracy);
+        this.GPSAlt = jsonObject.getString(ListingEntry.COLUMN_NAME_GPSAltitude);
+        this.AppVer = jsonObject.getString(ListingEntry.COLUMN_APPVER);
+        this.tagId = jsonObject.getString(ListingEntry.COLUMN_TAGID);
+        this.isRandom = jsonObject.getString(ListingEntry.COLUMN_RANDOMIZED);
+        this.username = jsonObject.getString(ListingEntry.COLUMN_USERNAME);
+
+        return this;
+    }
+
     public static abstract class ListingEntry implements BaseColumns {
 
         public static final String TABLE_NAME = "listings";
