@@ -70,8 +70,13 @@ public class MenuActivity extends AppCompatActivity {
             case R.id.menu_sync:
                 onSyncDataClick();
                 return true;
+
             case R.id.menu_upload:
                 syncServer();
+                return true;
+
+            case R.id.menu_randomization:
+                startActivity(new Intent(getApplicationContext(), RandomizationActivity.class));
                 return true;
 
             case R.id.menu_openDB:

@@ -13,20 +13,18 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.other.randomListAdapter;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 
 public class RandomizationActivity extends MenuActivity {
 
     ArrayList<ListingContract> lstList;
-    Collection<ListingContract> listingCollection;
 
     @BindView(R.id.lstClusters)
     RecyclerView lstClusters;
@@ -37,6 +35,7 @@ public class RandomizationActivity extends MenuActivity {
 
     ArrayList<ListingContract> listingDataList;
     public static ArrayList<Integer> hhRandomise;
+    public static ArrayList<Integer> hhClusterNotEligible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +49,7 @@ public class RandomizationActivity extends MenuActivity {
 
         lstList = new ArrayList<>();
         hhRandomise = new ArrayList<>();
+        hhClusterNotEligible = new ArrayList<>();
 
         new ApplicationsTask(this).execute();
 
@@ -72,6 +72,13 @@ public class RandomizationActivity extends MenuActivity {
                         if (position != -1) {
                             Boolean flag = true;
                             for (int item : hhRandomise) {
+                                if (item == position) {
+                                    flag = false;
+                                    break;
+                                }
+                            }
+
+                            for (int item : hhClusterNotEligible) {
                                 if (item == position) {
                                     flag = false;
                                     break;
@@ -125,15 +132,23 @@ public class RandomizationActivity extends MenuActivity {
 
             lstClusters.setAdapter(randomListAdapter);
 
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    for (int item : hhClusterNotEligible) {
+                        lstClusters.getChildAt(item).setBackgroundColor(getResources().getColor(R.color.brown));
+                    }
 
-            if (success) {
-                Toast.makeText(context, "Done!!", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(context, "Error!!", Toast.LENGTH_LONG).show();
-            }
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+
+                    if (!success) {
+                        Toast.makeText(context, "Error in getting Data!!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, 800);
+
         }
 
         protected Boolean doInBackground(final String... args) {
@@ -225,8 +240,12 @@ public class RandomizationActivity extends MenuActivity {
 
                 dialog.setTitle("Saving Randomization");
 
-                for (ListingContract listingData : listingDataList) {
+                /*for (ListingContract listingData : listingDataList) {
                     db.addBLRandom(listingData);
+                }*/
+
+                for (byte i = 0; i < listingDataList.size(); i++) {
+                    db.addBLRandom(listingDataList.get(i), i + 1);
                 }
 
                 /*Update in db*/

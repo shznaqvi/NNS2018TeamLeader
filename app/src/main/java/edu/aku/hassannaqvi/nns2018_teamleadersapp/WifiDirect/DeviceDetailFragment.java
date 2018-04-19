@@ -42,7 +42,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
 
     protected static final int CHOOSE_FILE_RESULT_CODE = 20;
     EditText msgBox;
-    ProgressDialog progressDialog = null;
+    static ProgressDialog progressDialog = null;
     DatabaseHelper db;
     private View mContentView = null;
     private WifiP2pDevice device;
@@ -153,8 +153,16 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         // server. The file server is single threaded, single connection server
         // socket.
         if (info.groupFormed && info.isGroupOwner) {
+
+//        Setting ProgressDialog
+            progressDialog = new ProgressDialog(getActivity(),
+                    R.style.AppTheme_Dark_Dialog);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Receiving Data..");
+
             new FileServerAsyncTask(getActivity(), mContentView.findViewById(R.id.status_text))
                     .execute();
+
         } else if (info.groupFormed) {
             // The other device acts as the client. In this case, we enable the
             // get file button.
@@ -268,21 +276,32 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                statusText.setText("Message - " + result);
-                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-                String json = result;
+//                statusText.setText("Message - " + result);
+                final String json = result;
                 if (json.length() > 0) {
-                    DatabaseHelper db = new DatabaseHelper(context);
-                    try {
-                        JSONArray jsonArray = new JSONArray(json);
-                        db.insertDataComesFromDevice(jsonArray);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+
+                    progressDialog.show();
+
+                    new android.os.Handler().postDelayed(
+                            new Runnable() {
+                                public void run() {
+                                    Toast.makeText(context, "Data received", Toast.LENGTH_LONG).show();
+
+                                    DatabaseHelper db = new DatabaseHelper(context);
+                                    try {
+                                        JSONArray jsonArray = new JSONArray(json);
+                                        db.insertDataComesFromDevice(jsonArray);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    // onLoginFailed();
+                                    progressDialog.dismiss();
+                                }
+                            }, 3000);
+
                 }
-
             }
-
         }
 
         /*

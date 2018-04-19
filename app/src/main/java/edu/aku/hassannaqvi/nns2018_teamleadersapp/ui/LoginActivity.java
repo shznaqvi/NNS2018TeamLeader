@@ -19,8 +19,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -53,7 +56,6 @@ import static java.lang.Thread.sleep;
 //import com.github.amlcurran.showcaseview.ShowcaseView;
 //import com.github.amlcurran.showcaseview.targets.Target;
 //import com.github.amlcurran.showcaseview.targets.ViewTarget;
-
 
 /**
  * A login screen that offers login via email/password.
@@ -112,9 +114,23 @@ public class LoginActivity extends MenuActivity implements LoaderCallbacks<Curso
     String DirectoryName;
 
     DatabaseHelper db;
-    String dtToday = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date().getTime());
+
     private UserLoginTask mAuthTask = null;
     private int clicks;
+
+    String dtToday = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date().getTime());
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem dbManager = menu.findItem(R.id.menu_openDB);
+        MenuItem editform = menu.findItem(R.id.menu_randomization);
+
+        dbManager.setVisible(false);
+        editform.setVisible(true);
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -300,7 +316,7 @@ public class LoginActivity extends MenuActivity implements LoaderCallbacks<Curso
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-       /* if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -311,7 +327,7 @@ public class LoginActivity extends MenuActivity implements LoaderCallbacks<Curso
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
-        }*/ /*else if (!isEmailValid(email)) {
+        } /*else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
@@ -552,6 +568,12 @@ public class LoginActivity extends MenuActivity implements LoaderCallbacks<Curso
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     /*public class syncData extends AsyncTask<String, String, String> {

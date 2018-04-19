@@ -124,7 +124,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
-                android:onClick="openB"
                 android:text="OPEN Anthropometry Section" />
 
 
@@ -136,7 +135,6 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="16dp"
                 android:background="#1565C0"
-                android:onClick="syncServer"
                 android:text="Upload Data"
                 android:visibility="gone" />
 

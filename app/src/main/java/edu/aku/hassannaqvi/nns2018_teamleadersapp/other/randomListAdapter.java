@@ -16,9 +16,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.RandomizationActivity;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.RandomizationActivity;
 
 /**
  * Created by ali.azaz on 13/04/2017.
@@ -68,8 +68,18 @@ public class randomListAdapter extends RecyclerView.Adapter<randomListAdapter.Vi
             }
         });*/
 
-        if (list.get(position).getTotalhh().equals(list.get(position).randCount)) {
+//        if (list.get(position).getTotalhh().equals(list.get(position).randCount)) {
+        if (Integer.valueOf(list.get(position).randCount) > 0) {
             RandomizationActivity.hhRandomise.add(position);
+        }
+        if (list.get(position).getEligibleCluster()) {
+            for (int pos : RandomizationActivity.hhClusterNotEligible) {
+                if (pos == position) {
+                    RandomizationActivity.hhClusterNotEligible.remove(position);
+                }
+            }
+        } else {
+            RandomizationActivity.hhClusterNotEligible.add(position);
         }
 
     }
@@ -106,11 +116,11 @@ public class randomListAdapter extends RecyclerView.Adapter<randomListAdapter.Vi
             rndCount.setText("Randomized Count: " + contact.getRandCount());
             totalCount.setText("Total HH Count: " + contact.getTotalhh());
 
-            if (contact.getTotalhh().equals(contact.randCount)) {
+            /*if (contact.getTotalhh().equals(contact.randCount)) {
                 checkSelected.setVisibility(View.VISIBLE);
-            }
+            }*/
 
-//            checkSelected.setChecked(contact.getIsRandom().equals("1") ? true : false);
+            checkSelected.setVisibility(contact.getIsRandom().equals("1") ? View.VISIBLE : View.GONE);
         }
     }
 

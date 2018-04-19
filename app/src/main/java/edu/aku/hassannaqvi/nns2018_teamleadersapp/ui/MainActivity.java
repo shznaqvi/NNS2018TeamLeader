@@ -278,7 +278,7 @@ public class MainActivity extends MenuActivity {
         final Intent oF = new Intent(MainActivity.this, RandomizationActivity.class);
 
         if (sharedPref.getString("tagName", null) != "" && sharedPref.getString("tagName", null) != null && !MainApp.userName.equals("0000")) {
-            //   startActivity(oF);
+               startActivity(oF);
         } else {
 
             builder = new AlertDialog.Builder(MainActivity.this);

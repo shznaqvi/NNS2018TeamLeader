@@ -15,9 +15,9 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/menu_viewMember"
+        android:id="@+id/menu_randomization"
         android:orderInCategory="1"
-        android:title="Edit Form"
+        android:title="Randomization"
         app:showAsAction="never" />
 
     <item
