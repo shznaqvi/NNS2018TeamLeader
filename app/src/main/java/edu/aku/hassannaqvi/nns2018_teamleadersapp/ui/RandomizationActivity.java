@@ -120,6 +120,7 @@ public class RandomizationActivity extends MenuActivity {
         public ApplicationsTask(Context mContext) {
             context = mContext;
             dialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
+
         }
 
         protected void onPreExecute() {
@@ -146,6 +147,8 @@ public class RandomizationActivity extends MenuActivity {
                     if (!success) {
                         Toast.makeText(context, "Error in getting Data!!", Toast.LENGTH_LONG).show();
                     }
+
+                    randomListAdapter.notifyDataSetChanged();
                 }
             }, 800);
 
@@ -159,6 +162,7 @@ public class RandomizationActivity extends MenuActivity {
                 }
 
                 randomListAdapter = new randomListAdapter(context, lstList);
+                randomListAdapter.notifyDataSetChanged();
 
                 return true;
             } catch (Exception e) {
@@ -198,13 +202,13 @@ public class RandomizationActivity extends MenuActivity {
                     }
 
                     if (success) {
-
-                        new ApplicationsTask(context).execute();
-
                         Toast.makeText(context, "Randomized!!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(context, "Error in Randomization!!", Toast.LENGTH_LONG).show();
                     }
+
+                    new ApplicationsTask(context).execute();
+//                    randomListAdapter.notifyDataSetChanged();
 
                 }
             }, 800);
