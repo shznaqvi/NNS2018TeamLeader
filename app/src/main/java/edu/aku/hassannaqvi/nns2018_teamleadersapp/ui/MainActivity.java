@@ -320,12 +320,10 @@ public class MainActivity extends MenuActivity {
 //        }
     }
 
-
-
-
-
-
-
+    public void openHHDiv() {
+        Intent iD = new Intent(this, HouseholdDivInfoActivity.class);
+        startActivity(iD);
+    }
 
     /*public void openD(View v) {
         Intent iD = new Intent(this, SectionDActivity.class);

@@ -22,6 +22,8 @@ public class BLRandomContract {
     private String contact;
     private String selStructure;
     private String rndType;
+    private String assignHH;
+    private String assignDevice;
 
     public BLRandomContract() {
     }
@@ -71,6 +73,9 @@ public class BLRandomContract {
         this.selStructure = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HH_SELECTED_STRUCT));
         this.rndType = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_RANDOM_TYPE));
 
+        this.assignHH = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ASSIGNED_HH));
+        this.assignDevice = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ASSIGNED_DEVICE));
+
         return this;
     }
 
@@ -87,6 +92,9 @@ public class BLRandomContract {
         json.put(singleRandomHH.COLUMN_CONTACT, this.contact);
         json.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, this.selStructure);
         json.put(singleRandomHH.COLUMN_RANDOM_TYPE, "1");
+
+        json.put(singleRandomHH.COLUMN_ASSIGNED_HH, this.assignHH);
+        json.put(singleRandomHH.COLUMN_ASSIGNED_DEVICE, this.assignDevice);
 
         return json;
     }
@@ -171,6 +179,22 @@ public class BLRandomContract {
         this.selStructure = selStructure;
     }
 
+    public String getAssignHH() {
+        return assignHH;
+    }
+
+    public void setAssignHH(String assignHH) {
+        this.assignHH = assignHH;
+    }
+
+    public String getAssignDevice() {
+        return assignDevice;
+    }
+
+    public void setAssignDevice(String assignDevice) {
+        this.assignDevice = assignDevice;
+    }
+
     public static abstract class singleRandomHH implements BaseColumns {
 
         public static final String TABLE_NAME = "BLRandom";
@@ -184,8 +208,11 @@ public class BLRandomContract {
         public static final String COLUMN_HH_HEAD = "hh08";
         public static final String COLUMN_CONTACT = "hh09";
         public static final String COLUMN_HH_SELECTED_STRUCT = "hhss";
-
         public static final String COLUMN_RANDOM_TYPE = "rndtype";
+
+        public static final String COLUMN_ASSIGNED_HH = "rndAssign";
+        public static final String COLUMN_ASSIGNED_DEVICE = "asignDevice";
+
         public static final String COLUMN_SYNCED = "synced";
         public static final String COLUMN_SYNCED_DATE = "synced_date";
 

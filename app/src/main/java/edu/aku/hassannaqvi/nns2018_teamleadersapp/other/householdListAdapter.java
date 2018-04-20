@@ -8,8 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,48 +18,47 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.RandomizationActivity;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
 
 /**
  * Created by ali.azaz on 13/04/2017.
  */
 
-public class randomListAdapter extends RecyclerView.Adapter<randomListAdapter.ViewHolder> {
-    private ArrayList<ListingContract> list;
+public class householdListAdapter extends RecyclerView.Adapter<householdListAdapter.ViewHolder> {
+    private ArrayList<BLRandomContract> list;
 
     Context mContext;
-    ViewHolder holder;
 
-    public randomListAdapter(Context context, ArrayList<ListingContract> list) {
+    public householdListAdapter(Context context, ArrayList<BLRandomContract> list) {
         this.list = list;
         mContext = context;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View statusContainer = LayoutInflater.from(parent.getContext()).inflate(R.layout.lstview_random1, parent, false);
+        View statusContainer = LayoutInflater.from(parent.getContext()).inflate(R.layout.lstview_hh_list, parent, false);
         return new ViewHolder(statusContainer);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        this.holder = holder;
-        this.holder.bindUser(list.get(position));
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        holder.bindUser(list.get(position));
 
-//        if (list.get(position).getTotalhh().equals(list.get(position).randCount)) {
-        if (Integer.valueOf(list.get(position).randCount) > 0) {
-            RandomizationActivity.hhRandomise.add(position);
-        }
-        else if (list.get(position).getEligibleCluster()) {
-            for (int pos : RandomizationActivity.hhClusterNotEligible) {
-                if (pos == position) {
-                    RandomizationActivity.hhClusterNotEligible.remove(position);
+        holder.checkSelected.setTag(position);
+
+        holder.checkSelected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer pos = (Integer) holder.checkSelected.getTag();
+                Toast.makeText(mContext, list.get(pos).getHhhead() + " clicked!", Toast.LENGTH_SHORT).show();
+
+                if (list.get(pos).getAssignHH().equals("1")) {
+                    list.get(pos).setAssignHH("0");
+                } else {
+                    list.get(pos).setAssignHH("1");
                 }
             }
-        } else {
-            RandomizationActivity.hhClusterNotEligible.add(position);
-        }
+        });
 
     }
 
@@ -70,35 +70,28 @@ public class randomListAdapter extends RecyclerView.Adapter<randomListAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.checkSelected)
-        ImageView checkSelected;
+        CheckBox checkSelected;
         @BindView(R.id.clusterCode)
         TextView clusterCode;
-        @BindView(R.id.resCount)
-        TextView resCount;
-        @BindView(R.id.childCount)
-        TextView childCount;
-        @BindView(R.id.rndCount)
-        TextView rndCount;
-        @BindView(R.id.totalCount)
-        TextView totalCount;
+        @BindView(R.id.hhno)
+        TextView hhno;
+        @BindView(R.id.hhname)
+        TextView hhname;
+        @BindView(R.id.status)
+        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindUser(ListingContract contact) {
-            clusterCode.setText(contact.getClusterCode());
-            resCount.setText("Residential: " + contact.getResCount());
-            childCount.setText("Child < 5: " + contact.getChildCount());
-            rndCount.setText("Randomized Structured: " + contact.getRandCount());
-            totalCount.setText("Total Structure Count: " + contact.getTotalhh());
+        public void bindUser(BLRandomContract contact) {
 
-            /*if (contact.getTotalhh().equals(contact.randCount)) {
-                checkSelected.setVisibility(View.VISIBLE);
-            }*/
+            clusterCode.setText(contact.getSubVillageCode());
+            hhno.setText(String.format("%04d", Integer.valueOf(contact.getStructure())) + "-" + contact.getExtension());
+            hhname.setText(contact.getHhhead().equals("") ? "NA" : contact.getHhhead());
 
-            checkSelected.setVisibility(contact.getIsRandom().equals("1") ? View.VISIBLE : View.GONE);
+            checkSelected.setChecked(contact.getAssignHH().equals("1"));
         }
     }
 

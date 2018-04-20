@@ -81,6 +81,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + singleRandomHH.COLUMN_HH_SELECTED_STRUCT + " TEXT,"
             + singleRandomHH.COLUMN_RANDOMDT + " TEXT," +
             singleRandomHH.COLUMN_RANDOM_TYPE + " TEXT, " +
+            singleRandomHH.COLUMN_ASSIGNED_HH + " TEXT, " +
+            singleRandomHH.COLUMN_ASSIGNED_DEVICE + " TEXT, " +
             singleRandomHH.COLUMN_SYNCED + " TEXT, " +
             singleRandomHH.COLUMN_SYNCED_DATE + " TEXT " +
             " );";
@@ -499,6 +501,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(singleRandomHH.COLUMN_HH_HEAD, lc.getHh08());
         values.put(singleRandomHH.COLUMN_CONTACT, lc.getHh09());
         values.put(singleRandomHH.COLUMN_RANDOM_TYPE, "1");
+        values.put(singleRandomHH.COLUMN_ASSIGNED_HH, "");
 
         values.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, lc.getHh10().equals("1") ? "1" : "2");
 
@@ -748,7 +751,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 singleRandomHH.COLUMN_HH_SELECTED_STRUCT,
                 singleRandomHH.COLUMN_CONTACT,
                 singleRandomHH.COLUMN_HH_HEAD,
-                singleRandomHH.COLUMN_RANDOM_TYPE
+                singleRandomHH.COLUMN_RANDOM_TYPE,
+                singleRandomHH.COLUMN_ASSIGNED_HH,
+                singleRandomHH.COLUMN_ASSIGNED_DEVICE,
         };
 
         String whereClause = singleRandomHH.COLUMN_SYNCED + " is null OR " + singleRandomHH.COLUMN_SYNCED + " = '' ";
@@ -785,7 +790,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allBL;
     }
 
-    public Collection<BLRandomContract> getAllBLRandom(String subAreaCode, String hh) {
+    public Collection<BLRandomContract> getAllBLRandom(String subAreaCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
@@ -799,12 +804,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 singleRandomHH.COLUMN_HH_SELECTED_STRUCT,
                 singleRandomHH.COLUMN_CONTACT,
                 singleRandomHH.COLUMN_HH_HEAD,
-                singleRandomHH.COLUMN_RANDOM_TYPE
+                singleRandomHH.COLUMN_RANDOM_TYPE,
+                singleRandomHH.COLUMN_ASSIGNED_HH,
+                singleRandomHH.COLUMN_ASSIGNED_DEVICE
         };
 
-        String whereClause = singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + "=? AND " +
-                singleRandomHH.COLUMN_HH + "=?";
-        String[] whereArgs = new String[]{subAreaCode, hh};
+        String whereClause = singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + "=? ";
+        String[] whereArgs = new String[]{subAreaCode};
         String groupBy = null;
         String having = null;
 

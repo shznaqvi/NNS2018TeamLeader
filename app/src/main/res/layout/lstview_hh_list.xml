@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/cv"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="3dp"
+    card_view:cardElevation="4dp"
+    android:layout_marginBottom="10dp"
+    card_view:cardUseCompatPadding="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/checkSelected"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="08" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="15"
+            android:gravity="center|start"
+            android:padding="@dimen/_3sdp"
+            android:src="@drawable/homeicon" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_1sdp"
+            android:layout_marginRight="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_weight="90"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:layout_marginRight="1dp"
+                android:layout_weight="50">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/txthh"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingBottom="@dimen/_2sdp"
+                        android:paddingTop="@dimen/_2sdp"
+                        android:text="HH NO"
+                        android:textColor="@android:color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/hhno"
+                        android:layout_width="match_parent"
+                        android:layout_height="85dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/txthh"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="3dp"
+                        android:gravity="center|start"
+                        android:paddingLeft="10dp"
+                        android:text="0001-X"
+                        android:textColor="@android:color/black"
+                        android:textSize="30sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/_2sdp"
+                android:layout_weight="50"
+                android:orientation="vertical"
+                android:padding="1dp">
+
+                <TextView
+                    android:id="@+id/clusterCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:gravity="right"
+                    android:paddingBottom="@dimen/_1sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="7071"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/hhname"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:gravity="right"
+                    android:paddingBottom="@dimen/_1sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:text="ABC DEF"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

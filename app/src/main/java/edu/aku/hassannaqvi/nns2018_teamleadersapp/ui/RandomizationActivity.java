@@ -47,7 +47,6 @@ public class RandomizationActivity extends MenuActivity {
 
         db = new DatabaseHelper(this);
 
-        lstList = new ArrayList<>();
         hhRandomise = new ArrayList<>();
         hhClusterNotEligible = new ArrayList<>();
 
@@ -121,6 +120,7 @@ public class RandomizationActivity extends MenuActivity {
             context = mContext;
             dialog = new ProgressDialog(context, R.style.AppTheme_Dark_Dialog);
 
+            lstList = new ArrayList<>();
         }
 
         protected void onPreExecute() {
@@ -248,7 +248,7 @@ public class RandomizationActivity extends MenuActivity {
                     db.addBLRandom(listingData);
                 }*/
 
-                for (byte i = 0; i < listingDataList.size(); i++) {
+                for (int i = 0; i < listingDataList.size(); i++) {
                     db.addBLRandom(listingDataList.get(i), i + 1);
                 }
 

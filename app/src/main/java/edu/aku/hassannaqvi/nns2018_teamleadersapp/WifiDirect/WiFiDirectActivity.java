@@ -35,7 +35,7 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.DeviceListFragment.
 public class WiFiDirectActivity extends AppCompatActivity implements ChannelListener, DeviceActionListener {
 
     public static final String TAG = "wifidirectdemo";
-    public static final String ACTION_SEND_DATA = "edu.aku.hassannaqvi.nns_2018.WifiDirect.SEND";
+    public static final String ACTION_SEND_DATA = "edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.SEND";
     private final IntentFilter intentFilter = new IntentFilter();
     EditText txtMsg;
     private WifiP2pManager manager;

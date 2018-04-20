@@ -120,7 +120,9 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
             public void onClick(View view) {
                 Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
                 serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
-                serviceIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(db.getAnthroFamilyMembers()));
+
+                serviceIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(db.getAnthroFamilyMembers())); //Sending data to other device
+
                 serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
                         info.groupOwnerAddress.getHostAddress());
                 serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
@@ -184,9 +186,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
     public void showDetails(WifiP2pDevice device) {
         this.device = device;
         this.getView().setVisibility(View.VISIBLE);
-        TextView view = mContentView.findViewById(R.id.device_address);
-        view.setText(device.deviceAddress);
-        view = mContentView.findViewById(R.id.device_info);
+        TextView view = mContentView.findViewById(R.id.device_info);
         view.setText(device.toString());
 
     }
@@ -196,9 +196,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
      */
     public void resetViews() {
         mContentView.findViewById(R.id.btn_connect).setVisibility(View.VISIBLE);
-        TextView view = mContentView.findViewById(R.id.device_address);
-        view.setText(R.string.empty);
-        view = mContentView.findViewById(R.id.device_info);
+        TextView view = mContentView.findViewById(R.id.device_info);
         view.setText(R.string.empty);
         view = mContentView.findViewById(R.id.group_owner);
         view.setText(R.string.empty);

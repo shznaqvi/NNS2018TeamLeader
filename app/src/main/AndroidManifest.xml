@@ -68,6 +68,16 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme1"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.HouseholdDivInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme1"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".ui.HouseholdListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme1"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".WifiDirect.WiFiDirectActivity"

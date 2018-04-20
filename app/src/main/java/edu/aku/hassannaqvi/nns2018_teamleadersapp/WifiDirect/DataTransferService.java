@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class DataTransferService extends IntentService {
 
-    public static final String ACTION_SEND_DATA = "edu.aku.hassannaqvi.nns_2018.WifiDirect.SEND";
+    public static final String ACTION_SEND_DATA = "edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.SEND";
     public static final String EXTRAS_GROUP_OWNER_ADDRESS = "go_host";
     public static final String EXTRAS_GROUP_OWNER_PORT = "go_port";
     private static final int SOCKET_TIMEOUT = 5000;
