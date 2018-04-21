@@ -77,8 +77,6 @@ public class householdListAdapter extends RecyclerView.Adapter<householdListAdap
         TextView hhno;
         @BindView(R.id.hhname)
         TextView hhname;
-        @BindView(R.id.status)
-        TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);
