@@ -50,7 +50,6 @@ public class householdListAdapter extends RecyclerView.Adapter<householdListAdap
             @Override
             public void onClick(View v) {
                 Integer pos = (Integer) holder.checkSelected.getTag();
-                Toast.makeText(mContext, list.get(pos).getHhhead() + " clicked!", Toast.LENGTH_SHORT).show();
 
                 if (list.get(pos).getAssignHH().equals("1")) {
                     list.get(pos).setAssignHH("0");
