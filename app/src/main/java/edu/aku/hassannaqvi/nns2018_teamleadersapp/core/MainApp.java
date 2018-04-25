@@ -16,6 +16,7 @@ import android.text.format.DateFormat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -126,7 +127,6 @@ public class MainApp extends Application {
     public static int nuCount = 1;
 
     public static Boolean validateFlag = false;
-
 
     protected static LocationManager locationManager;
 

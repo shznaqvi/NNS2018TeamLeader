@@ -115,7 +115,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                 });
 
 
-        mContentView.findViewById(R.id.btn_send_msg).setOnClickListener(new View.OnClickListener() {
+        mContentView.findViewById(R.id.btn_send_data).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
@@ -168,7 +168,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         } else if (info.groupFormed) {
             // The other device acts as the client. In this case, we enable the
             // get file button.
-            mContentView.findViewById(R.id.btn_send_msg).setVisibility(View.VISIBLE);
+            mContentView.findViewById(R.id.btn_send_data).setVisibility(View.VISIBLE);
             mContentView.findViewById(R.id.msgBox).setVisibility(View.VISIBLE);
             ((TextView) mContentView.findViewById(R.id.status_text)).setText(getResources()
                     .getString(R.string.client_text));
@@ -202,7 +202,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         view.setText(R.string.empty);
         view = mContentView.findViewById(R.id.status_text);
         view.setText(R.string.empty);
-        mContentView.findViewById(R.id.btn_send_msg).setVisibility(View.GONE);
+        mContentView.findViewById(R.id.btn_send_data).setVisibility(View.GONE);
         mContentView.findViewById(R.id.msgBox).setVisibility(View.GONE);
         this.getView().setVisibility(View.GONE);
     }

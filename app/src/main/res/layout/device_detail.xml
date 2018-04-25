@@ -29,10 +29,10 @@
                 android:text="@string/disconnect_peer_button" />
 
             <Button
-                android:id="@+id/btn_send_msg"
+                android:id="@+id/btn_send_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send Anthro Data"
+                android:text="Send Randomized Data"
                 android:visibility="gone" />
 
             <EditText

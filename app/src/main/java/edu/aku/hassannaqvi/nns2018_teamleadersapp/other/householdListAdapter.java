@@ -8,12 +8,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -106,15 +103,6 @@ public class householdListAdapter extends RecyclerView.Adapter<householdListAdap
                 public boolean onSingleTapUp(MotionEvent e) {
                     return true;
                 }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = viewRecycle.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && mListener != null) {
-                        mListener.onItemLongClick(child, viewRecycle.getChildAdapterPosition(child));
-                    }
-
-                }
             });
         }
 
@@ -139,8 +127,6 @@ public class householdListAdapter extends RecyclerView.Adapter<householdListAdap
 
         public interface OnItemClickListener {
             void onItemClick(View view, int position);
-
-            void onItemLongClick(View view, int position);
         }
 
 
