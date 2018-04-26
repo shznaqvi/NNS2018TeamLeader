@@ -70,7 +70,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = DATABASE_NAME.replace(".", "_" + MainApp.versionName + "_" + DATABASE_VERSION + "_copy.");
 
     public static final String SQL_CREATE_BL_RANDOM = "CREATE TABLE " + singleRandomHH.TABLE_NAME + "("
-            + singleRandomHH.COLUMN_ID + " TEXT,"
+            + singleRandomHH.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + singleRandomHH.COLUMN_SERIAL_ID + " TEXT,"
             + singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + " TEXT,"
             + singleRandomHH.COLUMN_LUID + " TEXT,"
             + singleRandomHH.COLUMN_HH + " TEXT,"
@@ -492,7 +493,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 // Create a new map of values, where column names are the keys
         ContentValues values = new ContentValues();
-        values.put(singleRandomHH.COLUMN_ID, id);
+        values.put(singleRandomHH.COLUMN_SERIAL_ID, id);
         values.put(singleRandomHH.COLUMN_LUID, lc.getUID());
         values.put(singleRandomHH.COLUMN_RANDOMDT, lc.getHhDT());
         values.put(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE, lc.getClusterCode());
@@ -527,7 +528,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 ContentValues values = new ContentValues();
 
-                values.put(singleRandomHH.COLUMN_ID, Vc.get_ID());
+                values.put(singleRandomHH.COLUMN_SERIAL_ID, Vc.get_ID());
                 values.put(singleRandomHH.COLUMN_LUID, Vc.getLUID());
                 values.put(singleRandomHH.COLUMN_STRUCTURE_NO, Vc.getStructure());
                 values.put(singleRandomHH.COLUMN_FAMILY_EXT_CODE, Vc.getExtension());
@@ -741,7 +742,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
-                singleRandomHH.COLUMN_ID,
+                singleRandomHH.COLUMN_SERIAL_ID,
                 singleRandomHH.COLUMN_LUID,
                 singleRandomHH.COLUMN_STRUCTURE_NO,
                 singleRandomHH.COLUMN_FAMILY_EXT_CODE,
@@ -762,7 +763,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String having = null;
 
         String orderBy =
-                singleRandomHH.COLUMN_ID + " ASC";
+                singleRandomHH.COLUMN_SERIAL_ID + " ASC";
 
         Collection<BLRandomContract> allBL = new ArrayList<>();
         try {
@@ -794,7 +795,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
-                singleRandomHH.COLUMN_ID,
+                singleRandomHH.COLUMN_SERIAL_ID,
                 singleRandomHH.COLUMN_LUID,
                 singleRandomHH.COLUMN_STRUCTURE_NO,
                 singleRandomHH.COLUMN_FAMILY_EXT_CODE,
@@ -815,7 +816,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String having = null;
 
         String orderBy =
-                singleRandomHH.COLUMN_ID + " ASC";
+                singleRandomHH.COLUMN_STRUCTURE_NO + " ASC";
 
         Collection<BLRandomContract> allBL = new ArrayList<>();
         try {
@@ -2177,7 +2178,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(singleRandomHH.COLUMN_SYNCED_DATE, new Date().toString());
 
 // Which row to update, based on the title
-        String where = singleRandomHH.COLUMN_ID + " = ?";
+        String where = singleRandomHH.COLUMN_SERIAL_ID + " = ?";
         String[] whereArgs = {id};
 
         int count = db.update(
@@ -2570,6 +2571,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 db.close();
             }
         }
+        return jsonArray;
+    }
+
+    public JSONArray getBLRandomData(ArrayList<BLRandomContract> randomContracts) {
+
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (BLRandomContract rand : randomContracts) {
+                jsonArray.put(rand.toJSONObject());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         return jsonArray;
     }
 

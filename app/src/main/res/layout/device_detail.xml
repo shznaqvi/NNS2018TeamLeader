@@ -32,15 +32,9 @@
                 android:id="@+id/btn_send_data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send Randomized Data"
+                android:text="Send Randomized HH"
                 android:visibility="gone" />
 
-            <EditText
-                android:id="@+id/msgBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Message"
-                android:textColor="@color/colorPrimary" />
         </LinearLayout>
 
         <TextView

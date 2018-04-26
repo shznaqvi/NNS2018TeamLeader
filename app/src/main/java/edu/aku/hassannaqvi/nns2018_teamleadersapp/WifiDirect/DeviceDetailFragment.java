@@ -33,6 +33,7 @@ import java.net.Socket;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.DeviceListFragment.DeviceActionListener;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdDivInfoActivity;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device
@@ -41,7 +42,6 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
 public class DeviceDetailFragment extends Fragment implements ConnectionInfoListener {
 
     protected static final int CHOOSE_FILE_RESULT_CODE = 20;
-    EditText msgBox;
     static ProgressDialog progressDialog = null;
     DatabaseHelper db;
     private View mContentView = null;
@@ -76,7 +76,6 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         db = new DatabaseHelper(getActivity());
 
         mContentView = inflater.inflate(R.layout.device_detail, null);
-        msgBox = mContentView.findViewById(R.id.msgBox);
         mContentView.findViewById(R.id.btn_connect).setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -121,7 +120,7 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                 Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
                 serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
 
-                serviceIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(db.getAnthroFamilyMembers())); //Sending data to other device
+                serviceIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(db.getBLRandomData(HouseholdDivInfoActivity.lstList))); //Sending data to other device
 
                 serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
                         info.groupOwnerAddress.getHostAddress());
@@ -169,7 +168,6 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
             // The other device acts as the client. In this case, we enable the
             // get file button.
             mContentView.findViewById(R.id.btn_send_data).setVisibility(View.VISIBLE);
-            mContentView.findViewById(R.id.msgBox).setVisibility(View.VISIBLE);
             ((TextView) mContentView.findViewById(R.id.status_text)).setText(getResources()
                     .getString(R.string.client_text));
         }
@@ -203,7 +201,6 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         view = mContentView.findViewById(R.id.status_text);
         view.setText(R.string.empty);
         mContentView.findViewById(R.id.btn_send_data).setVisibility(View.GONE);
-        mContentView.findViewById(R.id.msgBox).setVisibility(View.GONE);
         this.getView().setVisibility(View.GONE);
     }
 

@@ -42,7 +42,7 @@ public class BLRandomContract {
     }
 
     public BLRandomContract Sync(JSONObject jsonObject) throws JSONException {
-        this._ID = jsonObject.getString(singleRandomHH.COLUMN_ID);
+        this._ID = jsonObject.getString(singleRandomHH.COLUMN_SERIAL_ID);
         this.LUID = jsonObject.getString(singleRandomHH.COLUMN_LUID);
         this.subVillageCode = jsonObject.getString(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE);
         this.structure = jsonObject.getString(singleRandomHH.COLUMN_STRUCTURE_NO);
@@ -61,7 +61,7 @@ public class BLRandomContract {
     }
 
     public BLRandomContract Hydrate(Cursor cursor) {
-        this._ID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ID));
+        this._ID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_SERIAL_ID));
         this.LUID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_LUID));
         this.subVillageCode = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE));
         this.structure = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_STRUCTURE_NO));
@@ -82,7 +82,8 @@ public class BLRandomContract {
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put(singleRandomHH.COLUMN_ID, this._ID);
+        json.put("projectname", "NNS 2018 - Team Leaders");
+        json.put(singleRandomHH.COLUMN_SERIAL_ID, this._ID);
         json.put(singleRandomHH.COLUMN_RANDOMDT, this.randomDT);
         json.put(singleRandomHH.COLUMN_LUID, this.LUID);
         json.put(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE, this.subVillageCode);
@@ -92,10 +93,6 @@ public class BLRandomContract {
         json.put(singleRandomHH.COLUMN_CONTACT, this.contact);
         json.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, this.selStructure);
         json.put(singleRandomHH.COLUMN_RANDOM_TYPE, "1");
-
-        json.put(singleRandomHH.COLUMN_ASSIGNED_HH, this.assignHH);
-        json.put(singleRandomHH.COLUMN_ASSIGNED_DEVICE, this.assignDevice);
-
         return json;
     }
 
@@ -198,7 +195,8 @@ public class BLRandomContract {
     public static abstract class singleRandomHH implements BaseColumns {
 
         public static final String TABLE_NAME = "BLRandom";
-        public static final String COLUMN_ID = "_id";
+        public static final String COLUMN_ID = "ID";
+        public static final String COLUMN_SERIAL_ID = "_id";
         public static final String COLUMN_RANDOMDT = "randDT";
         public static final String COLUMN_LUID = "UID";
         public static final String COLUMN_CLUSTER_BLOCK_CODE = "hh02";

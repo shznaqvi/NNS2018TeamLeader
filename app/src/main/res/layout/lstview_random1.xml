@@ -13,7 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/type"
@@ -70,7 +70,7 @@
                     android:id="@+id/totalCount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="60"
                     android:paddingLeft="5dp"
                     android:text="1234"
                     android:textSize="18sp" />
@@ -80,7 +80,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_weight="1"
+                    android:layout_weight="40"
                     android:gravity="right"
                     android:paddingRight="5dp"
                     android:text="123"
@@ -97,7 +97,7 @@
                     android:id="@+id/rndCount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_weight="60"
                     android:gravity="center_vertical"
                     android:paddingBottom="5dp"
                     android:paddingLeft="5dp"
@@ -109,7 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
-                    android:layout_weight="1"
+                    android:layout_weight="40"
                     android:gravity="right"
                     android:paddingBottom="5dp"
                     android:paddingRight="5dp"

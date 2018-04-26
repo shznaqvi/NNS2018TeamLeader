@@ -68,6 +68,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         channel = manager.initialize(this, getMainLooper(), null);
 
 //        txtMsg = findViewById(R.id.txtMsg);
+
     }
 
     /**

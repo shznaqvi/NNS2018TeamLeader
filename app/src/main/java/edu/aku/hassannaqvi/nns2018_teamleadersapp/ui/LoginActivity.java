@@ -127,7 +127,7 @@ public class LoginActivity extends MenuActivity implements LoaderCallbacks<Curso
         MenuItem editform = menu.findItem(R.id.menu_randomization);
 
         dbManager.setVisible(false);
-        editform.setVisible(true);
+        editform.setVisible(false);
 
         return true;
     }

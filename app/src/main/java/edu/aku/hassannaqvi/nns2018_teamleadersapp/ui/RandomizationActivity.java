@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -222,18 +221,16 @@ public class RandomizationActivity extends MenuActivity {
                 if (listingContracts.size() > 20) {
 
                     double sum = listingContracts.size() / 20d;
-                    double random = (new Random().nextDouble() * sum) + 1d;
+//                    double random = (new Random().nextDouble() * 1) + sum + 0d;
+                    double random = 1d + Math.random() * (sum - 1);
 
                     listingDataList.add(listingContracts.get((int) random));
 
                     double lstSize = sum + random + 0d;
 
                     while ((int) lstSize <= listingContracts.size()) {
-
                         listingDataList.add(listingContracts.get((int) lstSize));
-
                         lstSize += sum + 0d;
-
                     }
 
                 } else {
