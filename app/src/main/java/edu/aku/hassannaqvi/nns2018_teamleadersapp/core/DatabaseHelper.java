@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + singleRandomHH.COLUMN_RANDOMDT + " TEXT," +
             singleRandomHH.COLUMN_RANDOM_TYPE + " TEXT, " +
             singleRandomHH.COLUMN_ASSIGNED_HH + " TEXT, " +
-            singleRandomHH.COLUMN_ASSIGNED_DEVICE + " TEXT, " +
+            singleRandomHH.COLUMN_HOST_DEVICE + " TEXT, " +
             singleRandomHH.COLUMN_SYNCED + " TEXT, " +
             singleRandomHH.COLUMN_SYNCED_DATE + " TEXT " +
             " );";
@@ -754,7 +754,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 singleRandomHH.COLUMN_HH_HEAD,
                 singleRandomHH.COLUMN_RANDOM_TYPE,
                 singleRandomHH.COLUMN_ASSIGNED_HH,
-                singleRandomHH.COLUMN_ASSIGNED_DEVICE,
+                singleRandomHH.COLUMN_HOST_DEVICE,
         };
 
         String whereClause = singleRandomHH.COLUMN_SYNCED + " is null OR " + singleRandomHH.COLUMN_SYNCED + " = '' ";
@@ -807,7 +807,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 singleRandomHH.COLUMN_HH_HEAD,
                 singleRandomHH.COLUMN_RANDOM_TYPE,
                 singleRandomHH.COLUMN_ASSIGNED_HH,
-                singleRandomHH.COLUMN_ASSIGNED_DEVICE
+                singleRandomHH.COLUMN_HOST_DEVICE
         };
 
         String whereClause = singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + "=? ";
@@ -2586,6 +2586,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return jsonArray;
+    }
+
+    public int updateBLRandomData(ArrayList<BLRandomContract> randomContracts,String deviceName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int count = 0;
+
+        for (BLRandomContract rand : randomContracts) {
+
+            ContentValues values = new ContentValues();
+            values.put(singleRandomHH.COLUMN_ASSIGNED_HH, 1);
+            values.put(singleRandomHH.COLUMN_HOST_DEVICE, deviceName);
+
+            String selection = singleRandomHH.COLUMN_LUID + " =?";
+            String[] selectionArgs = {rand.getLUID()};
+
+            count += db.update(singleRandomHH.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
+
+        }
+        return count;
     }
 
 

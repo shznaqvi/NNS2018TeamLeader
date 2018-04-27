@@ -10,8 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -90,11 +88,15 @@ public class HouseholdListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
 
-            lstHH.setAdapter(householdListAdapter);
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+
+                    /*for (int item = 0; item < HouseholdDivInfoActivity.lstList.size(); item++) {
+                        if (HouseholdDivInfoActivity.lstList.get(item).getAssignHH().equals("1")) {
+                            lstHH.getChildAt(item).setEnabled(false);
+                        }
+                    }*/
 
                     if (dialog.isShowing()) {
                         dialog.dismiss();
@@ -114,6 +116,7 @@ public class HouseholdListActivity extends AppCompatActivity {
             try {
 
                 householdListAdapter = new householdListAdapter(context, HouseholdDivInfoActivity.lstList);
+                lstHH.setAdapter(householdListAdapter);
                 householdListAdapter.notifyDataSetChanged();
 
                 return true;

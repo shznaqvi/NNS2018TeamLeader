@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +32,7 @@ import java.net.Socket;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.DeviceListFragment.DeviceActionListener;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdDivInfoActivity;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdListActivity;
 
 /**
  * A fragment that manages a particular peer and allows interaction with device
@@ -117,20 +116,31 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
         mContentView.findViewById(R.id.btn_send_data).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
-                serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
 
-                serviceIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(db.getBLRandomData(HouseholdDivInfoActivity.lstList))); //Sending data to other device
+                if (HouseholdListActivity.selectedRan != null && HouseholdListActivity.selectedRan.size() != 0) {
+                    Intent serviceIntent = new Intent(getActivity(), DataTransferService.class);
+                    serviceIntent.setAction(DataTransferService.ACTION_SEND_DATA);
 
-                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
-                        info.groupOwnerAddress.getHostAddress());
-                serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
-                getActivity().startService(serviceIntent);
+                    serviceIntent.putExtra(Intent.EXTRA_TEXT, String.valueOf(db.getBLRandomData(HouseholdListActivity.selectedRan))); //Sending data to other device
+
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_ADDRESS,
+                            info.groupOwnerAddress.getHostAddress());
+                    serviceIntent.putExtra(DataTransferService.EXTRAS_GROUP_OWNER_PORT, 8988);
+                    getActivity().startService(serviceIntent);
+
+                    if (db.updateBLRandomData(HouseholdListActivity.selectedRan, info.groupOwnerAddress.getHostName()) == HouseholdListActivity.selectedRan.size()) {
+                        Toast.makeText(getActivity(), "HH Assigned!!", Toast.LENGTH_SHORT).show();
+                    }
+
+                } else {
+                    Toast.makeText(getActivity(), "First initiate HH Distribution activity!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         return mContentView;
     }
+
 
     @Override
     public void onConnectionInfoAvailable(final WifiP2pInfo info) {
@@ -275,25 +285,32 @@ public class DeviceDetailFragment extends Fragment implements ConnectionInfoList
                 final String json = result;
                 if (json.length() > 0) {
 
-                    progressDialog.show();
+                    try {
 
-                    new android.os.Handler().postDelayed(
-                            new Runnable() {
-                                public void run() {
-                                    Toast.makeText(context, "Data received", Toast.LENGTH_LONG).show();
+                        progressDialog.show();
 
-                                    DatabaseHelper db = new DatabaseHelper(context);
-                                    try {
-                                        JSONArray jsonArray = new JSONArray(json);
-                                        db.insertDataComesFromDevice(jsonArray);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                        new android.os.Handler().postDelayed(
+                                new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(context, "Data received", Toast.LENGTH_LONG).show();
+
+                                        DatabaseHelper db = new DatabaseHelper(context);
+                                        try {
+                                            JSONArray jsonArray = new JSONArray(json);
+                                            db.insertDataComesFromDevice(jsonArray);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        // onLoginFailed();
+                                        progressDialog.dismiss();
                                     }
+                                }, 3000);
 
-                                    // onLoginFailed();
-                                    progressDialog.dismiss();
-                                }
-                            }, 3000);
+                    } catch (Exception e) {
+
+                        Toast.makeText(context, "Open Connect to device activity!!", Toast.LENGTH_LONG).show();
+                    }
 
                 }
             }

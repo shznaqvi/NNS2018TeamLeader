@@ -1,7 +1,9 @@
 package edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pConfig;
@@ -24,6 +26,8 @@ import android.widget.Toast;
 
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.DeviceListFragment.DeviceActionListener;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdDivInfoActivity;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdListActivity;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available
@@ -258,7 +262,49 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
 
     }
 
-/*    public void SendMsg(View v) {
+    @Override
+    public void onBackPressed() {
+
+        if (HouseholdListActivity.selectedRan != null) {
+            if (HouseholdListActivity.selectedRan.size() > 0) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        WiFiDirectActivity.this);
+                alertDialogBuilder
+                        .setMessage("Are you sure to go back??")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,
+                                                        int id) {
+
+                                        HouseholdListActivity.selectedRan = null;
+
+                                        Intent ii = new Intent(getApplicationContext(), HouseholdDivInfoActivity.class);
+                                        ii.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(ii);
+                                        finish();
+
+                                    }
+                                });
+                alertDialogBuilder.setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+
+                            }
+                        });
+                AlertDialog alert = alertDialogBuilder.create();
+                alert.show();
+            } else {
+                super.onBackPressed();
+            }
+        } else {
+            super.onBackPressed();
+        }
+
+    }
+
+    /*    public void SendMsg(View v) {
         Intent intent = new Intent();
         intent.setAction(ACTION_SEND_DATA);
         intent.putExtra(Intent.EXTRA_TEXT, txtMsg.getText().toString());

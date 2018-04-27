@@ -50,6 +50,8 @@ public class BLRandomContract {
         this.structure = String.format("%04d", Integer.valueOf(this.structure));
 
         this.extension = jsonObject.getString(singleRandomHH.COLUMN_FAMILY_EXT_CODE);
+        this.extension = String.format("%03d", Integer.valueOf(this.extension));
+
         this.hh = jsonObject.getString(singleRandomHH.COLUMN_STRUCTURE_NO)
                 + "-" + jsonObject.getString(singleRandomHH.COLUMN_FAMILY_EXT_CODE);
         this.randomDT = jsonObject.getString(singleRandomHH.COLUMN_RANDOMDT);
@@ -74,7 +76,7 @@ public class BLRandomContract {
         this.rndType = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_RANDOM_TYPE));
 
         this.assignHH = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ASSIGNED_HH));
-        this.assignDevice = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ASSIGNED_DEVICE));
+        this.assignDevice = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HOST_DEVICE));
 
         return this;
     }
@@ -82,7 +84,7 @@ public class BLRandomContract {
 
     public JSONObject toJSONObject() throws JSONException {
         JSONObject json = new JSONObject();
-        json.put("projectname", "NNS 2018 - Team Leaders");
+        json.put("project_name", "NNS 2018 - Team Leaders");
         json.put(singleRandomHH.COLUMN_SERIAL_ID, this._ID);
         json.put(singleRandomHH.COLUMN_RANDOMDT, this.randomDT);
         json.put(singleRandomHH.COLUMN_LUID, this.LUID);
@@ -209,7 +211,7 @@ public class BLRandomContract {
         public static final String COLUMN_RANDOM_TYPE = "rndtype";
 
         public static final String COLUMN_ASSIGNED_HH = "rndAssign";
-        public static final String COLUMN_ASSIGNED_DEVICE = "asignDevice";
+        public static final String COLUMN_HOST_DEVICE = "hostDevice";
 
         public static final String COLUMN_SYNCED = "synced";
         public static final String COLUMN_SYNCED_DATE = "synced_date";

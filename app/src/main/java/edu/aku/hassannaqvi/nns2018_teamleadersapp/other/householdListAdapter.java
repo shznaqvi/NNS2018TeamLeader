@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdListActivity;
 
 /**
  * Created by ali.azaz on 13/04/2017.
@@ -55,6 +56,10 @@ public class householdListAdapter extends RecyclerView.Adapter<householdListAdap
                 }
             }
         });
+/*
+        if (list.get(position).getAssignHH().equals("1")) {
+            holder.checkSelected.setEnabled(false);
+        }*/
 
     }
 
