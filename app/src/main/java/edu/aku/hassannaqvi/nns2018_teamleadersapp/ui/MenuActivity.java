@@ -26,15 +26,7 @@ import java.util.Date;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.WifiDirect.WiFiDirectActivity;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ChildContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.DeceasedContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.EligibleMembersContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.FamilyMembersContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.FormsContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.MWRAContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.NutritionContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.OutcomeContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.RecipientsContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.AndroidDatabaseManager;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.MainApp;
@@ -69,6 +61,10 @@ public class MenuActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_sync:
                 onSyncDataClick();
+                return true;
+
+            case R.id.menu_listing_sync:
+                startActivity(new Intent(getApplicationContext(), DownloadListingActivity.class));
                 return true;
 
             case R.id.menu_upload:
@@ -193,91 +189,10 @@ public class MenuActivity extends AppCompatActivity {
                     db.getUnsyncedForms(), this.findViewById(R.id.syncStatus)
             ).execute();
 
-            Toast.makeText(getApplicationContext(), "Syncing Family Members", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Family Members",
-                    "updateSyncedFamilyMembers",
-                    FamilyMembersContract.class,
-                    MainApp._HOST_URL + FamilyMembersContract.familyMembers._URL,
-                    db.getUnsyncedFamilyMembers(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing WRAs", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "WRAs",
-                    "updateSyncedMWRAForm",
-                    MWRAContract.class,
-                    MainApp._HOST_URL + MWRAContract.MWRATable._URL,
-                    db.getUnsyncedMWRA(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing Children", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Children",
-                    "updateSyncedChildForm",
-                    ChildContract.class,
-                    MainApp._HOST_URL + ChildContract.ChildTable._URL,
-                    db.getUnsyncedChildForms(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing Eligibles", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Eligibles",
-                    "updateSyncedEligibles",
-                    EligibleMembersContract.class,
-                    MainApp._HOST_URL + EligibleMembersContract.eligibleMembers._URL,
-                    db.getUnsyncedEligbleMembers(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing Outcomes", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Outcomes",
-                    "updateSyncedOutcomeForm",
-                    OutcomeContract.class,
-                    MainApp._HOST_URL + OutcomeContract.outcomeTable._URL,
-                    db.getUnsyncedOutcome(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing Recepients", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Recepients",
-                    "updateSyncedRecepientsForm",
-                    RecipientsContract.class,
-                    MainApp._HOST_URL + RecipientsContract.RecipientsTable._URL,
-                    db.getUnsyncedRecipients(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-            Toast.makeText(getApplicationContext(), "Syncing Nutrition", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Nutrition",
-                    "updateSyncedNutrition",
-                    NutritionContract.class,
-                    MainApp._HOST_URL + NutritionContract.NutritionTable._URL,
-                    db.getUnsyncedNutrition(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
-
-            Toast.makeText(getApplicationContext(), "Syncing Deceased", Toast.LENGTH_SHORT).show();
-            new SyncAllData(
-                    this,
-                    "Deceased",
-                    "updateSyncedDeceasedForm",
-                    DeceasedContract.class,
-                    MainApp._HOST_URL + DeceasedContract.DeceasedTable._URL,
-                    db.getUnsyncedDeceasedMembers(), this.findViewById(R.id.syncStatus)
-            ).execute();
-
             Toast.makeText(getApplicationContext(), "Syncing BL Random", Toast.LENGTH_SHORT).show();
             new SyncAllData(
                     this,
-                    "BL_Random",
+                    "BLRandom",
                     "updateSyncedBLRandom",
                     BLRandomContract.class,
                     MainApp._HOST_URL + BLRandomContract.singleRandomHH._URI,
@@ -311,14 +226,10 @@ public class MenuActivity extends AppCompatActivity {
 
                 @Override
                 public void run() {
-                    Toast.makeText(MenuActivity.this, "Sync Enum Blocks", Toast.LENGTH_LONG).show();
-                    new GetAllData(mContext, "EnumBlock").execute();
                     Toast.makeText(MenuActivity.this, "Sync Users", Toast.LENGTH_LONG).show();
                     new GetAllData(mContext, "User").execute();
-                    Toast.makeText(MenuActivity.this, "Sync Users", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MenuActivity.this, "Sync BLRandom", Toast.LENGTH_LONG).show();
                     new GetAllData(mContext, "BLRandom").execute();
-                    Toast.makeText(MenuActivity.this, "Sync App Version", Toast.LENGTH_LONG).show();
-                    new GetAllData(mContext, "VersionApp").execute();
                 }
             });
 

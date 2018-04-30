@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="rtl"
-    tools:context=".ui.HouseholdDivInfoActivity">
+    tools:context=".ui.DownloadListingActivity">
 
     <data>
 
@@ -10,7 +10,7 @@
 
         <variable
             name="callback"
-            type="edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdDivInfoActivity" />
+            type="edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.DownloadListingActivity" />
     </data>
 
     <ScrollView
@@ -56,7 +56,7 @@
                 android:layout_weight="30"
                 android:background="@drawable/button_bg"
                 android:elevation="5dp"
-                android:onClick="@{() -> callback.BtnCheckHH()}"
+                android:onClick="@{() -> callback.BtnDownloadLL()}"
                 android:padding="20dp"
                 android:text="CHECK"
                 android:textColor="@color/white"

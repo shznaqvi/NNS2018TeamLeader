@@ -7,16 +7,18 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.EnumBlockContract;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.ListingContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.UsersContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.VersionAppContract;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
@@ -61,8 +63,8 @@ public class GetAllData extends AsyncTask<String, String, String> {
         URL url = null;
         try {
             switch (syncClass) {
-                case "EnumBlock":
-                    url = new URL(MainApp._HOST_URL + EnumBlockContract.EnumBlockTable._URI);
+                case "Listing":
+                    url = new URL(MainApp._HOST_URL + ListingContract.ListingEntry._URI);
                     break;
                 case "User":
                     url = new URL(MainApp._HOST_URL + UsersContract.UsersTable._URI);
@@ -78,6 +80,35 @@ public class GetAllData extends AsyncTask<String, String, String> {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
+
+            switch (syncClass) {
+                case "Listing":
+
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setDoInput(true);
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("charset", "utf-8");
+                    urlConnection.setUseCaches(false);
+
+                    // Starts the query
+                    urlConnection.connect();
+                    JSONArray jsonSync = new JSONArray();
+                    DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
+                    JSONObject json = new JSONObject();
+                    try {
+                        json.put("cluster", MainApp.listingCluster);
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                    Log.d(TAG, "downloadUrl: " + json.toString());
+                    wr.writeBytes(json.toString());
+                    wr.flush();
+                    wr.close();
+
+                    break;
+            }
+
             Log.d(TAG, "doInBackground: " + urlConnection.getResponseCode());
             if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -114,8 +145,8 @@ public class GetAllData extends AsyncTask<String, String, String> {
                     JSONArray jsonArray = new JSONArray(json);
 
                     switch (syncClass) {
-                        case "EnumBlock":
-                            db.syncEnumBlocks(jsonArray);
+                        case "Listing":
+                            db.syncListing(jsonArray);
                             break;
                         case "User":
                             db.syncUser(jsonArray);

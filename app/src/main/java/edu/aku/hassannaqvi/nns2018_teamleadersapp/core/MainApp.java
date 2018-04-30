@@ -16,7 +16,6 @@ import android.text.format.DateFormat;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -113,6 +112,8 @@ public class MainApp extends Application {
     public static List<FamilyMembersContract> familyMembersList;
     //public static List<FamilyMembersContract> familyMembersList;
     public static List<Integer> hhClicked;
+
+    public static String listingCluster = "";
 
     // Gul Sanober
     public static Map<String, FamilyMembersContract> mwraMap;

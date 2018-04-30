@@ -609,5 +609,6 @@ public class ListingContract {
 
         public static final String COLUMN_USERNAME = "username";
         public static final String _URL = "listings.php";
+        public static final String _URI = "clusterdata.php";
     }
 }

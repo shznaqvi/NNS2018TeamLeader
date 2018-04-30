@@ -1045,6 +1045,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void syncListing(JSONArray fmlist) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            JSONArray jsonArray = fmlist;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObjectUser = jsonArray.getJSONObject(i);
+                LisitngInsertion(jsonObjectUser, db);
+            }
+
+
+        } catch (Exception e) {
+            Log.d(TAG, "syncData(e): " + e);
+        } finally {
+            db.close();
+        }
+    }
+
     public void insertDataComesFromDevice(JSONArray fmlist) {
         SQLiteDatabase db = this.getWritableDatabase();
         try {
@@ -1286,8 +1303,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ListingEntry.COLUMN_APPVER,
                 ListingEntry.COLUMN_RANDOMIZED,
                 "COUNT(*) as RESCOUNTER, " +
-                        "COUNT(case " + ListingEntry.COLUMN_NAME_HH10 + " when '1' then 1 else null end) as CHILDCOUNTER," +
-                        "COUNT(case " + ListingEntry.COLUMN_RANDOMIZED + " when '1' then 1 else null end) as RANDCOUNTER"
+                        /*"COUNT(case " + ListingEntry.COLUMN_NAME_HH10 + " when '1' then 1 else null end) as CHILDCOUNTER," +
+                        "COUNT(case " + ListingEntry.COLUMN_RANDOMIZED + " when '1' then 1 else null end) as RANDCOUNTER"*/
+                        ListingEntry.COLUMN_NAME_HH10 + " as CHILDCOUNTER," +
+                        ListingEntry.COLUMN_RANDOMIZED + " as RANDCOUNTER"
         };
 
         String whereClause = ListingEntry.COLUMN_NAME_HH09A1 + " =? ";
