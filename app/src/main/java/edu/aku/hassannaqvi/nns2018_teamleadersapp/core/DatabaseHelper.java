@@ -1312,7 +1312,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String whereClause = ListingEntry.COLUMN_NAME_HH09A1 + " =? ";
         String[] whereArgs = {"1"};
         String groupBy = ListingEntry.COLUMN_NAME_CLUSTERCODE;
-        String having = ListingEntry.COLUMN_NAME_CLUSTERCODE + "=" + listingContract.getClusterCode();
+//        String having = ListingEntry.COLUMN_NAME_CLUSTERCODE + "=" + "substr('0000000000'||" + listingContract.getClusterCode() + ", length('0000000000'||" + listingContract.getClusterCode() + ")-9, 10)";
+        String having = ListingEntry.COLUMN_NAME_CLUSTERCODE + "='" + listingContract.getClusterCode() + "'";
 
         String orderBy = ListingEntry.COLUMN_NAME_CLUSTERCODE + " ASC";
 
