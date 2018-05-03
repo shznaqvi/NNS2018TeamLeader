@@ -1248,7 +1248,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ListingContract listing = new ListingContract().hydrate(c, 0);
                 listing.setEligibleCluster(CheckEligibleCluster(String.valueOf(c.getString(c.getColumnIndex(ListingEntry.COLUMN_NAME_CLUSTERCODE))),
                         String.valueOf(c.getString(c.getColumnIndex("MAXID")))));
-                allLC = getAllListingsForRandom1(listing);
+                ListingContract listingContract = getAllListingsForRandom1(listing);
+                if (listingContract != null) {
+                    allLC.add(listingContract);
+                }
             }
         } finally {
             if (c != null) {
@@ -1261,7 +1264,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allLC;
     }
 
-    public Collection<ListingContract> getAllListingsForRandom1(ListingContract listingContract) {
+    public ListingContract getAllListingsForRandom1(ListingContract listingContract) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
@@ -1317,7 +1320,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String orderBy = ListingEntry.COLUMN_NAME_CLUSTERCODE + " ASC";
 
-        Collection<ListingContract> allLC = new ArrayList<>();
+        ListingContract allLC = null;
         try {
             c = db.query(
                     true,
@@ -1333,7 +1336,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
             while (c.moveToNext()) {
 //                ListingContract listing = new ListingContract();
-                allLC.add(listingContract.hydrate(c, 2));
+                allLC = new ListingContract().hydrate(c, 2);
             }
         } finally {
             if (c != null) {
