@@ -39,9 +39,6 @@ public class HouseholdDivInfoActivity extends MenuActivity {
 
         db = new DatabaseHelper(this);
 
-//        Initializion of list
-        lstList = new ArrayList<>();
-
     }
 
     public class ApplicationsTask extends AsyncTask<String, Void, Boolean> {
@@ -71,7 +68,7 @@ public class HouseholdDivInfoActivity extends MenuActivity {
                     }
 
                     if (!success) {
-                        Toast.makeText(context, "Error in getting Data!!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Some issue in getting Data!!", Toast.LENGTH_LONG).show();
                     }
 
                 }
@@ -100,6 +97,10 @@ public class HouseholdDivInfoActivity extends MenuActivity {
         if (formValidation()) {
 
             try {
+
+//              Initialization of list
+                lstList = new ArrayList<>();
+
                 Boolean flag = new ApplicationsTask(this).execute().get();
 
                 if (flag) {

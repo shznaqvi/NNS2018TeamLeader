@@ -11,7 +11,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:orientation="horizontal">
 
         <CheckBox
@@ -53,7 +53,7 @@
 
                     <TextView
                         android:id="@+id/txthh"
-                        android:layout_width="match_parent"
+                        android:layout_width="75dp"
                         android:layout_height="45dp"
                         android:paddingBottom="@dimen/_2sdp"
                         android:paddingTop="@dimen/_2sdp"
@@ -63,12 +63,11 @@
 
                     <TextView
                         android:id="@+id/hhno"
-                        android:layout_width="match_parent"
+                        android:layout_width="149dp"
                         android:layout_height="85dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/txthh"
+                        android:layout_alignParentTop="true"
                         android:layout_gravity="center"
-                        android:layout_marginTop="3dp"
+                        android:layout_toEndOf="@+id/txthh"
                         android:gravity="center|start"
                         android:paddingLeft="10dp"
                         android:text="0001-X"
@@ -90,7 +89,7 @@
                 <TextView
                     android:id="@+id/clusterCode"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_22sdp"
+                    android:layout_height="@dimen/_15sdp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="1dp"
                     android:gravity="right"
@@ -103,7 +102,7 @@
                 <TextView
                     android:id="@+id/hhname"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_22sdp"
+                    android:layout_height="@dimen/_16sdp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="1dp"
                     android:gravity="right"

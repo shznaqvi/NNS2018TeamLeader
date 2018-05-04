@@ -498,7 +498,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(singleRandomHH.COLUMN_RANDOMDT, lc.getHhDT());
         values.put(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE, lc.getClusterCode());
         values.put(singleRandomHH.COLUMN_STRUCTURE_NO, String.format("%04d", Integer.valueOf(lc.getHh03())));
-        values.put(singleRandomHH.COLUMN_FAMILY_EXT_CODE, String.format("%03d", Integer.valueOf(lc.getHh07())));
+
+        if (lc.getHh07().matches("[0-9]+")) {
+            values.put(singleRandomHH.COLUMN_FAMILY_EXT_CODE, String.format("%03d", Integer.valueOf(lc.getHh07())));
+        } else {
+            values.put(singleRandomHH.COLUMN_FAMILY_EXT_CODE, lc.getHh07());
+        }
+
         values.put(singleRandomHH.COLUMN_HH_HEAD, lc.getHh08());
         values.put(singleRandomHH.COLUMN_CONTACT, lc.getHh09());
         values.put(singleRandomHH.COLUMN_RANDOM_TYPE, "1");

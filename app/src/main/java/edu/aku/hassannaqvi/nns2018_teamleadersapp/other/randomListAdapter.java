@@ -7,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,10 +45,9 @@ public class randomListAdapter extends RecyclerView.Adapter<randomListAdapter.Vi
         this.holder.bindUser(list.get(position));
 
 //        if (list.get(position).getTotalhh().equals(list.get(position).randCount)) {
-        if (Integer.valueOf(list.get(position).randCount) > 0) {
+        if (list.get(position).getIsRandom().equals("1")) {
             RandomizationActivity.hhRandomise.add(position);
-        }
-        else if (list.get(position).getEligibleCluster()) {
+        } else if (list.get(position).getEligibleCluster()) {
             for (int pos : RandomizationActivity.hhClusterNotEligible) {
                 if (pos == position) {
                     RandomizationActivity.hhClusterNotEligible.remove(position);
@@ -91,7 +88,7 @@ public class randomListAdapter extends RecyclerView.Adapter<randomListAdapter.Vi
             clusterCode.setText(contact.getClusterCode());
             resCount.setText("Residential: " + contact.getResCount());
             childCount.setText("Child < 5: " + contact.getChildCount());
-            rndCount.setText("Randomized Structured: " + contact.getRandCount());
+            rndCount.setText("Randomized Structure: " + (contact.getIsRandom().equals("2") ? "0" : contact.getRandCount()));
             totalCount.setText("Total Structure Count: " + contact.getTotalhh());
 
             /*if (contact.getTotalhh().equals(contact.randCount)) {
