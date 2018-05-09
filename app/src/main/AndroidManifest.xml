@@ -97,6 +97,8 @@
         <service
             android:name=".WifiDirect.DataTransferService"
             android:enabled="true" />
+
+        <service android:name=".get.GetDataService" />
     </application>
 
 </manifest>

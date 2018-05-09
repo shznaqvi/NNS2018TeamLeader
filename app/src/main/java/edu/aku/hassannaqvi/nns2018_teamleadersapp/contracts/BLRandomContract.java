@@ -50,7 +50,11 @@ public class BLRandomContract {
         this.structure = String.format("%04d", Integer.valueOf(this.structure));
 
         this.extension = jsonObject.getString(singleRandomHH.COLUMN_FAMILY_EXT_CODE);
-        this.extension = String.format("%03d", Integer.valueOf(this.extension));
+        //this.extension = String.format("%03d", Integer.valueOf(this.extension));
+
+        if (jsonObject.getString(singleRandomHH.COLUMN_FAMILY_EXT_CODE).matches("[0-9]+")) {
+            this.extension = String.format("%03d", Integer.valueOf(this.extension));
+        }
 
         this.hh = jsonObject.getString(singleRandomHH.COLUMN_STRUCTURE_NO)
                 + "-" + jsonObject.getString(singleRandomHH.COLUMN_FAMILY_EXT_CODE);

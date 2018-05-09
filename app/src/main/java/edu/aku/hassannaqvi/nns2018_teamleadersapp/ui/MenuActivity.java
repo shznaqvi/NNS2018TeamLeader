@@ -31,6 +31,7 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.AndroidDatabaseManager;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.DatabaseHelper;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.core.MainApp;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.get.GetAllData;
+import edu.aku.hassannaqvi.nns2018_teamleadersapp.get.GetDataService;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.sync.SyncAllData;
 
 public class MenuActivity extends AppCompatActivity {
@@ -230,6 +231,8 @@ public class MenuActivity extends AppCompatActivity {
                     new GetAllData(mContext, "User").execute();
                     Toast.makeText(MenuActivity.this, "Sync BLRandom", Toast.LENGTH_LONG).show();
                     new GetAllData(mContext, "BLRandom").execute();
+
+//                    startService(new Intent(getApplicationContext(), GetDataService.class));
                 }
             });
 

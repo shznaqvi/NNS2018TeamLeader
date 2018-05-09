@@ -521,9 +521,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newRowId;
     }
 
+    public boolean CheckBLRandomExist(String id, String str, String ext) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+// New value for one column
+        String[] columns = {
+                singleRandomHH.COLUMN_ID
+        };
+
+// Which row to update, based on the ID
+        String selection = singleRandomHH.COLUMN_ID + " =? AND " + singleRandomHH.COLUMN_STRUCTURE_NO + " =? AND " + singleRandomHH.COLUMN_FAMILY_EXT_CODE + " =?";
+        String[] selectionArgs = {id, str, ext};
+        Cursor cursor = db.query(singleRandomHH.TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                       //filter by row groups
+                null);                      //The sort order
+
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        return cursorCount > 0;
+    }
+
     public void syncBLRandom(JSONArray BLlist) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(singleRandomHH.TABLE_NAME, null, null);
+//        db.delete(singleRandomHH.TABLE_NAME, null, null);
         try {
             JSONArray jsonArray = BLlist;
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -533,7 +558,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Vc.Sync(jsonObjectCC);
 
                 ContentValues values = new ContentValues();
-
                 values.put(singleRandomHH.COLUMN_SERIAL_ID, Vc.get_ID());
                 values.put(singleRandomHH.COLUMN_LUID, Vc.getLUID());
                 values.put(singleRandomHH.COLUMN_STRUCTURE_NO, Vc.getStructure());
@@ -545,7 +569,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(singleRandomHH.COLUMN_CONTACT, Vc.getContact());
                 values.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, Vc.getSelStructure());
 
-                db.insert(singleRandomHH.TABLE_NAME, null, values);
+                if (CheckBLRandomExist(Vc.get_ID(), Vc.getStructure(), Vc.getExtension())) {
+                    db.update(
+                            singleRandomHH.TABLE_NAME,
+                            values,
+                            singleRandomHH.COLUMN_LUID + " = ?",
+                            new String[]{Vc.getLUID()}
+                    );
+                } else {
+                    db.insert(singleRandomHH.TABLE_NAME, null, values);
+                }
             }
         } catch (Exception e) {
         } finally {
