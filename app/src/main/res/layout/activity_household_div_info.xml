@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layoutDirection="rtl"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.HouseholdDivInfoActivity">
 
     <data>
@@ -13,56 +14,94 @@
             type="edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdDivInfoActivity" />
     </data>
 
-    <ScrollView
+    <android.support.design.widget.CoordinatorLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
-            android:layoutDirection="rtl"
-            android:orientation="vertical">
+            android:layout_height="350dp"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <!--nh102-->
-            <TextView
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/colorPrimary"
-                android:padding="10dp"
-                android:text="@string/nh102"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white"
-                android:textSize="20dp" />
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:contentScrim="?attr/colorPrimary"
 
-            <EditText
-                android:id="@+id/nh102"
+                app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded.Shadow"
+
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_collapseMode="parallax">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/housecover2"
+                        android:fitsSystemWindows="true"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseMode="parallax" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/blackOverlay" />
+
+                </RelativeLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:textAlignment="center"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="@string/nh102"
-                android:inputType="number"
-                android:maxLength="4"
-                android:padding="10dp" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/article_keylines"
+                android:paddingRight="@dimen/md_keylines"
+                android:paddingTop="@dimen/md_keylines">
 
-            <Button
-                android:id="@+id/checkHHBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="20dp"
-                android:layout_weight="30"
-                android:background="@drawable/button_bg"
-                android:elevation="5dp"
-                android:onClick="@{() -> callback.BtnCheckHH()}"
-                android:padding="20dp"
-                android:text="CHECK"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerBlClusters"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
+                    android:scrollbars="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/appbar"
+                    tools:listitem="@layout/rand_cluster_list" />
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
 </layout>

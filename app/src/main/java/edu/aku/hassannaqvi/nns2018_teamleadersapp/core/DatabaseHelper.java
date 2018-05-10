@@ -521,7 +521,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return newRowId;
     }
 
-    public boolean CheckBLRandomExist(String id, String str, String ext) {
+    public boolean CheckBLRandomExist(String luid, String cluster, String str, String ext) {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -531,8 +531,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         };
 
 // Which row to update, based on the ID
-        String selection = singleRandomHH.COLUMN_ID + " =? AND " + singleRandomHH.COLUMN_STRUCTURE_NO + " =? AND " + singleRandomHH.COLUMN_FAMILY_EXT_CODE + " =?";
-        String[] selectionArgs = {id, str, ext};
+        String selection = singleRandomHH.COLUMN_LUID + " =? AND " + singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + " =? AND " + singleRandomHH.COLUMN_STRUCTURE_NO + " =? AND " + singleRandomHH.COLUMN_FAMILY_EXT_CODE + " =?";
+        String[] selectionArgs = {luid, cluster, str, ext};
         Cursor cursor = db.query(singleRandomHH.TABLE_NAME, //Table to query
                 columns,                    //columns to return
                 selection,                  //columns for the WHERE clause
@@ -569,12 +569,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(singleRandomHH.COLUMN_CONTACT, Vc.getContact());
                 values.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, Vc.getSelStructure());
 
-                if (CheckBLRandomExist(Vc.get_ID(), Vc.getStructure(), Vc.getExtension())) {
+                if (CheckBLRandomExist(Vc.getLUID(), Vc.getSubVillageCode(), Vc.getStructure(), Vc.getExtension())) {
                     db.update(
                             singleRandomHH.TABLE_NAME,
                             values,
-                            singleRandomHH.COLUMN_LUID + " = ?",
-                            new String[]{Vc.getLUID()}
+                            singleRandomHH.COLUMN_LUID + " =? AND " + singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE + " =? AND " + singleRandomHH.COLUMN_STRUCTURE_NO + " =? AND " + singleRandomHH.COLUMN_FAMILY_EXT_CODE + " =?",
+                            new String[]{Vc.getLUID(), Vc.getSubVillageCode(), Vc.getStructure(), Vc.getExtension()}
                     );
                 } else {
                     db.insert(singleRandomHH.TABLE_NAME, null, values);
@@ -817,7 +817,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
             while (c.moveToNext()) {
                 BLRandomContract dc = new BLRandomContract();
-                allBL.add(dc.Hydrate(c));
+                allBL.add(dc.Hydrate(c, 1));
             }
         } finally {
             if (c != null) {
@@ -830,7 +830,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return allBL;
     }
 
-    public Collection<BLRandomContract> getAllBLRandom(String subAreaCode) {
+    public Collection<BLRandomContract> getAllBLRandom() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = null;
+        String[] columns = {
+                singleRandomHH.COLUMN_SERIAL_ID,
+                singleRandomHH.COLUMN_LUID,
+                singleRandomHH.COLUMN_STRUCTURE_NO,
+                singleRandomHH.COLUMN_FAMILY_EXT_CODE,
+                singleRandomHH.COLUMN_HH,
+                singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE,
+                singleRandomHH.COLUMN_RANDOMDT,
+                singleRandomHH.COLUMN_HH_SELECTED_STRUCT,
+                singleRandomHH.COLUMN_CONTACT,
+                singleRandomHH.COLUMN_HH_HEAD,
+                singleRandomHH.COLUMN_RANDOM_TYPE,
+                singleRandomHH.COLUMN_ASSIGNED_HH,
+                singleRandomHH.COLUMN_HOST_DEVICE,
+                "COUNT(*) as TOTALHH"
+        };
+
+        String whereClause = null;
+        String[] whereArgs = null;
+        String groupBy = singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE;
+        String having = null;
+
+        String orderBy = singleRandomHH.COLUMN_RANDOMDT + " DESC";
+
+        Collection<BLRandomContract> allBL = new ArrayList<>();
+        try {
+            c = db.query(
+                    singleRandomHH.TABLE_NAME,  // The table to query
+                    columns,                   // The columns to return
+                    whereClause,               // The columns for the WHERE clause
+                    whereArgs,                 // The values for the WHERE clause
+                    groupBy,                   // don't group the rows
+                    having,                    // don't filter by row groups
+                    orderBy                    // The sort order
+            );
+            while (c.moveToNext()) {
+                BLRandomContract dc = new BLRandomContract();
+                allBL.add(dc.Hydrate(c, 0));
+            }
+        } finally {
+            if (c != null) {
+                c.close();
+            }
+            if (db != null) {
+                db.close();
+            }
+        }
+        return allBL;
+    }
+
+    public Collection<BLRandomContract> getAllBLRandomHH(String subAreaCode) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = null;
         String[] columns = {
@@ -870,7 +923,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             );
             while (c.moveToNext()) {
                 BLRandomContract dc = new BLRandomContract();
-                allBL.add(dc.Hydrate(c));
+                allBL.add(dc.Hydrate(c, 1));
             }
         } finally {
             if (c != null) {

@@ -24,6 +24,7 @@ public class BLRandomContract {
     private String rndType;
     private String assignHH;
     private String assignDevice;
+    private String totalHH;
 
     public BLRandomContract() {
     }
@@ -66,7 +67,7 @@ public class BLRandomContract {
         return this;
     }
 
-    public BLRandomContract Hydrate(Cursor cursor) {
+    public BLRandomContract Hydrate(Cursor cursor,int type) {
         this._ID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_SERIAL_ID));
         this.LUID = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_LUID));
         this.subVillageCode = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_CLUSTER_BLOCK_CODE));
@@ -81,6 +82,10 @@ public class BLRandomContract {
 
         this.assignHH = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_ASSIGNED_HH));
         this.assignDevice = cursor.getString(cursor.getColumnIndex(singleRandomHH.COLUMN_HOST_DEVICE));
+
+        if (type == 0){
+            this.totalHH = cursor.getString(cursor.getColumnIndex("TOTALHH"));
+        }
 
         return this;
     }
@@ -100,6 +105,14 @@ public class BLRandomContract {
         json.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, this.selStructure);
         json.put(singleRandomHH.COLUMN_RANDOM_TYPE, "1");
         return json;
+    }
+
+    public String getTotalHH() {
+        return totalHH;
+    }
+
+    public void setTotalHH(String totalHH) {
+        this.totalHH = totalHH;
     }
 
     public String get_ID() {
