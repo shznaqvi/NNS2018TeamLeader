@@ -16,7 +16,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.R;
 import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
-import edu.aku.hassannaqvi.nns2018_teamleadersapp.ui.HouseholdListActivity;
 
 /**
  * Created by ali.azaz on 13/04/2017.
@@ -89,7 +88,6 @@ public class householdListAdapter extends RecyclerView.Adapter<householdListAdap
             clusterCode.setText(contact.getSubVillageCode());
             hhno.setText(String.format("%04d", Integer.valueOf(contact.getStructure())) + "-" + contact.getExtension());
             hhname.setText(contact.getHhhead().equals("") ? "NA" : contact.getHhhead());
-
             checkSelected.setChecked(contact.getAssignHH().equals("1"));
         }
     }

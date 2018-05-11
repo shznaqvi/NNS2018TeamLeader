@@ -88,6 +88,8 @@ public class HouseholdListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
 
+            lstHH.setAdapter(householdListAdapter);
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -116,7 +118,7 @@ public class HouseholdListActivity extends AppCompatActivity {
             try {
 
                 householdListAdapter = new householdListAdapter(context, HouseholdDivInfoActivity.lstList);
-                lstHH.setAdapter(householdListAdapter);
+
                 householdListAdapter.notifyDataSetChanged();
 
                 return true;

@@ -10,6 +10,10 @@ import android.databinding.DataBindingUtil;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -38,13 +42,12 @@ public class HouseholdDivInfoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_household_div_info);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_household_div_info);
         binding.setCallback(this);
 
         this.setTitle("Cluster Information");
-        binding.collapsingToolbar.setTitle("Available Randomized Clusters");
+        binding.collapsingToolbar.setTitle("RANDOMIZED CLUSTERS");
 
         db = new DatabaseHelper(this);
 
@@ -74,12 +77,12 @@ public class HouseholdDivInfoActivity extends Activity {
 
                                                         lstList = new ArrayList<>();
 
-                                                        flag = new ClickingRecyclerTask(HouseholdDivInfoActivity.this, lstList.get(position).getSubVillageCode()).execute().get();
+                                                        flag = new ClickingRecyclerTask(HouseholdDivInfoActivity.this, clusterList.get(position).getSubVillageCode()).execute().get();
 
                                                         if (flag) {
                                                             Toast.makeText(getApplicationContext(), "Households Get.", Toast.LENGTH_SHORT).show();
 
-                                                            finish();
+//                                                            finish();
 
                                                             startActivity(new Intent(HouseholdDivInfoActivity.this, HouseholdListActivity.class));
 
@@ -128,35 +131,47 @@ public class HouseholdDivInfoActivity extends Activity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-
             binding.recyclerBlClusters.setAdapter(BLClustersListAdapter);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
-                    if (dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+                    binding.recyclerBlClusters.setLayoutManager(mLayoutManager);
+                    binding.recyclerBlClusters.setItemAnimator(new DefaultItemAnimator());
 
-                    if (!success) {
-                        Toast.makeText(context, "Error in getting Data!!", Toast.LENGTH_LONG).show();
-                    }
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (dialog.isShowing()) {
+                                dialog.dismiss();
+                            }
 
-                    BLClustersListAdapter.notifyDataSetChanged();
+                            if (!success) {
+                                Toast.makeText(context, "Error in getting Data!!", Toast.LENGTH_LONG).show();
+                            }
+
+                            BLClustersListAdapter.notifyDataSetChanged();
+                        }
+                    }, 1200);
+
                 }
-            }, 1000);
+            }, 1200);
 
         }
 
-        protected Boolean doInBackground(final String... args) {
+        protected Boolean doInBackground(String... args) {
             try {
 
                 for (BLRandomContract lst : db.getAllBLRandom()) {
                     clusterList.add(lst);
                 }
 
-                BLClustersListAdapter = new blClustersListAdapter(context, clusterList);
+                BLClustersListAdapter = new blClustersListAdapter(clusterList);
+
+
+
                 BLClustersListAdapter.notifyDataSetChanged();
 
                 return true;

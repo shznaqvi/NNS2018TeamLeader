@@ -568,6 +568,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(singleRandomHH.COLUMN_HH_HEAD, Vc.getHhhead());
                 values.put(singleRandomHH.COLUMN_CONTACT, Vc.getContact());
                 values.put(singleRandomHH.COLUMN_HH_SELECTED_STRUCT, Vc.getSelStructure());
+                values.put(singleRandomHH.COLUMN_ASSIGNED_HH, "0");
 
                 if (CheckBLRandomExist(Vc.getLUID(), Vc.getSubVillageCode(), Vc.getStructure(), Vc.getExtension())) {
                     db.update(

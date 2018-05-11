@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,11 +23,10 @@ import edu.aku.hassannaqvi.nns2018_teamleadersapp.contracts.BLRandomContract;
 public class blClustersListAdapter extends RecyclerView.Adapter<blClustersListAdapter.ViewHolder> {
     private ArrayList<BLRandomContract> list;
 
-    Context mContext;
+    ViewHolder holder;
 
-    public blClustersListAdapter(Context context, ArrayList<BLRandomContract> list) {
+    public blClustersListAdapter(ArrayList<BLRandomContract> list) {
         this.list = list;
-        mContext = context;
     }
 
     @Override
@@ -38,9 +36,9 @@ public class blClustersListAdapter extends RecyclerView.Adapter<blClustersListAd
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.bindUser(list.get(position));
-
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        this.holder = holder;
+        this.holder.bindUser(list.get(position));
     }
 
     @Override
